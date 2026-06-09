@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Phone, Menu, X, ChevronDown } from 'lucide-react';
-import { BUSINESS_INFO, SERVICE_CATEGORIES } from '../data';
+import { Menu, X, ChevronDown } from 'lucide-react';
+import { SERVICE_CATEGORIES } from '../data';
 import { getViewHref } from '../navigation';
 
 export function Header() {
@@ -22,12 +22,12 @@ export function Header() {
     setServicesOpen(false);
   };
 
-  const navClass = (path: string) => `hover:text-[#C5A059] transition-colors cursor-pointer ${
-    isActive(path) ? 'text-[#C5A059] underline underline-offset-8 decoration-2 decoration-[#C5A059]' : ''
+  const navClass = (path: string) => `hover:text-[#FBBF24] transition-colors cursor-pointer ${
+    isActive(path) ? 'text-[#FBBF24] underline underline-offset-8 decoration-2 decoration-[#FBBF24]' : ''
   }`;
 
   return (
-    <header id="app-header" className="bg-[#0A0A0B] border-b border-white/10 text-white sticky top-0 z-40 font-sans font-medium">
+    <header id="app-header" className="bg-[#0B1220] border-b border-white/10 text-white sticky top-0 z-40 font-sans font-medium">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between gap-3">
         <Link
           id="logo-brand"
@@ -35,7 +35,7 @@ export function Header() {
           onClick={closeMenus}
           className="brand-mark flex min-w-0 items-center gap-2.5 sm:gap-3 text-left focus:outline-none cursor-pointer group"
         >
-          <div className="brand-tool-logo relative flex h-11 w-11 sm:h-13 sm:w-13 shrink-0 items-center justify-center rounded-sm bg-[#050505] border border-[#C5A059]/50 shadow-md transition-transform group-hover:scale-105">
+          <div className="brand-tool-logo relative flex h-11 w-11 sm:h-13 sm:w-13 shrink-0 items-center justify-center rounded-sm bg-[#050505] border border-[#FBBF24]/50 shadow-md transition-transform group-hover:scale-105">
             <svg
               className="brand-tool-svg h-9 w-9 sm:h-11 sm:w-11"
               viewBox="0 0 120 120"
@@ -44,24 +44,24 @@ export function Header() {
             >
               <defs>
                 <linearGradient id="eliteGold" x1="18" y1="12" x2="104" y2="112" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#F7D27B" />
-                  <stop offset="0.48" stopColor="#C5A059" />
-                  <stop offset="1" stopColor="#8D6B2F" />
+                  <stop stopColor="#FDE68A" />
+                  <stop offset="0.48" stopColor="#FBBF24" />
+                  <stop offset="1" stopColor="#0F4C81" />
                 </linearGradient>
                 <linearGradient id="eliteWater" x1="30" y1="28" x2="48" y2="78" gradientUnits="userSpaceOnUse">
                   <stop stopColor="#4DD7FF" />
                   <stop offset="1" stopColor="#0876B2" />
                 </linearGradient>
                 <linearGradient id="eliteHeat" x1="77" y1="27" x2="92" y2="78" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#FFBD45" />
-                  <stop offset="1" stopColor="#F06A00" />
+                  <stop stopColor="#FBBF24" />
+                  <stop offset="1" stopColor="#F59E0B" />
                 </linearGradient>
                 <linearGradient id="eliteHeatInner" x1="84" y1="45" x2="91" y2="80" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#FFE68A" />
-                  <stop offset="1" stopColor="#FF8A00" />
+                  <stop stopColor="#0B1220" />
+                  <stop offset="1" stopColor="#FBBF24" />
                 </linearGradient>
               </defs>
-              <rect x="10" y="10" width="100" height="100" rx="22" fill="#0A0A0B" />
+              <rect x="10" y="10" width="100" height="100" rx="22" fill="#050505" />
               <path
                 d="M60 12 L93 25 Q106 32 108 48 L108 72 Q106 88 93 95 L60 108 L27 95 Q14 88 12 72 L12 48 Q14 32 27 25 Z"
                 fill="none"
@@ -98,7 +98,7 @@ export function Header() {
                 fontSize="34"
                 fontWeight="800"
                 letterSpacing="-3"
-                fill="#ffffff"
+                fill="#FBBF24"
               >
                 EP
               </text>
@@ -113,13 +113,13 @@ export function Header() {
           </div>
           <div className="brand-mark-copy min-w-0">
             <div className="font-serif text-lg sm:text-2xl tracking-tight uppercase flex items-center gap-1.5 leading-none whitespace-nowrap">
-              Elite <span className="text-[#C5A059] font-bold">Plumbers</span>
+              Elite <span className="text-[#FBBF24] font-bold">Plumbers</span>
             </div>
-            <p className="brand-mark-subtitle text-[8px] sm:text-[10px] text-white/40 font-mono tracking-[0.2em] sm:tracking-widest uppercase whitespace-nowrap">24/7 Bespoke Engineering</p>
+            <p className="brand-mark-subtitle text-[8px] sm:text-[10px] text-white/55 font-mono tracking-[0.2em] sm:tracking-widest uppercase whitespace-nowrap">24/7 Bespoke Engineering</p>
           </div>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-5 text-xs tracking-widest uppercase font-semibold text-white/60">
+        <nav className="hidden md:flex items-center gap-5 text-xs tracking-widest uppercase font-semibold text-white/70">
           <Link id="nav-btn-home" href="/" className={navClass('/')}>
             Home
           </Link>
@@ -132,8 +132,8 @@ export function Header() {
             <Link
               id="nav-btn-services-dropdown"
               href="/services"
-              className={`flex items-center gap-1 hover:text-[#C5A059] transition-colors cursor-pointer py-2 ${
-                isActive('/services') ? 'text-[#C5A059]' : ''
+              className={`flex items-center gap-1 hover:text-[#FBBF24] transition-colors cursor-pointer py-2 ${
+                isActive('/services') ? 'text-[#FBBF24]' : ''
               }`}
             >
               Services <ChevronDown className="h-3.5 w-3.5" />
@@ -142,14 +142,14 @@ export function Header() {
             {servicesOpen && (
               <div
                 id="mega-menu"
-                className="absolute left-0 top-full mt-1 w-[480px] bg-[#0E0E10] text-[#E0E0E0] p-5 rounded-sm shadow-2xl border border-white/10 grid grid-cols-2 gap-2 animate-in fade-in duration-200 z-50 animate-out fade-out"
+                className="absolute left-0 top-full mt-1 w-[480px] bg-[#0B1220] text-[#E5E7EB] p-5 rounded-sm shadow-2xl border border-white/10 grid grid-cols-2 gap-2 animate-in fade-in duration-200 z-50 animate-out fade-out"
               >
                 <div className="col-span-2 pb-2 mb-2 border-b border-white/5 flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-[#C5A059] uppercase tracking-widest">Our Services</span>
+                  <span className="text-[10px] font-bold text-[#FBBF24] uppercase tracking-widest">Our Services</span>
                   <Link
                     href="/services"
                     onClick={closeMenus}
-                    className="text-[10px] text-white hover:text-[#C5A059] transition-colors uppercase font-mono tracking-widest font-bold"
+                    className="text-[10px] text-white hover:text-[#FBBF24] transition-colors uppercase font-mono tracking-widest font-bold"
                   >
                     View All Services ➔
                   </Link>
@@ -159,12 +159,12 @@ export function Header() {
                     key={cat.id}
                     href={getViewHref('services', { categoryId: cat.id })}
                     onClick={closeMenus}
-                    className="flex items-center gap-2.5 rounded-sm px-2.5 py-2 text-left hover:bg-[#141416] group transition-all"
+                    className="flex items-center gap-2.5 rounded-sm px-2.5 py-2 text-left hover:bg-[#07162A] group transition-all"
                   >
-                    <span className="bg-white/5 group-hover:bg-[#C5A059]/10 p-1.5 rounded-sm text-lg transition-colors">{cat.emoji}</span>
+                    <span className="bg-white/5 group-hover:bg-[#FBBF24]/10 p-1.5 rounded-sm text-lg transition-colors">{cat.emoji}</span>
                     <div>
-                      <p className="text-xs font-bold text-white leading-tight group-hover:text-[#C5A059] transition-colors">{cat.name}</p>
-                      {cat.isEmergency && <span className="text-[9px] text-[#C5A059] font-mono tracking-widest uppercase font-semibold">Priority Dispatch</span>}
+                      <p className="text-xs font-bold text-white leading-tight group-hover:text-[#FBBF24] transition-colors">{cat.name}</p>
+                      {cat.isEmergency && <span className="text-[9px] text-[#FBBF24] font-mono tracking-widest uppercase font-semibold">Priority Dispatch</span>}
                     </div>
                   </Link>
                 ))}
@@ -180,7 +180,7 @@ export function Header() {
             Areas Covered
           </Link>
 
-          <Link id="nav-btn-faq" href="/#faq" className="hover:text-[#C5A059] transition-colors cursor-pointer">
+          <Link id="nav-btn-faq" href="/#faq" className="hover:text-[#FBBF24] transition-colors cursor-pointer">
             FAQ
           </Link>
 
@@ -188,24 +188,6 @@ export function Header() {
             Contact Us
           </Link>
         </nav>
-
-        <div className="hidden md:flex items-center gap-6">
-          <a
-            id="header-call-cta"
-            href={BUSINESS_INFO.phoneHref}
-            className="flex items-center gap-1.5 text-xs font-mono tracking-widest uppercase hover:text-[#C5A059] text-white/60 transition-colors"
-          >
-            <Phone className="h-4 w-4 text-[#C5A059]" />
-            <span className="text-white/40">Direct:</span> {BUSINESS_INFO.phone}
-          </a>
-          <Link
-            id="header-booking-cta"
-            href="/booking"
-            className="bg-[#C5A059] hover:bg-[#b08e4d] text-black font-bold uppercase text-[10px] tracking-widest px-6 py-3 transition-all rounded-sm shadow-md"
-          >
-            Book Priority Suite
-          </Link>
-        </div>
 
         <button
           id="menu-toggle-btn"
@@ -218,13 +200,13 @@ export function Header() {
       </div>
 
       {mobileOpen && (
-        <div id="mobile-menu" className="md:hidden border-t border-white/10 bg-[#0D0D0E] px-4 py-5 animate-in slide-in-from-top duration-200">
+        <div id="mobile-menu" className="md:hidden border-t border-white/10 bg-[#0B1220] px-4 py-5 animate-in slide-in-from-top duration-200">
           <div className="flex flex-col gap-4">
             <Link
               href="/"
               onClick={closeMenus}
-              className={`text-left font-serif text-lg py-1 border-b border-white/5 ${
-                isActive('/') ? 'text-[#C5A059]' : 'text-white/80'
+              className={`text-left font-serif text-lg py-1 border-b border-white/10 ${
+                isActive('/') ? 'text-[#FBBF24]' : 'text-white/80'
               }`}
             >
               Home
@@ -234,19 +216,19 @@ export function Header() {
               <Link
                 href="/services"
                 onClick={closeMenus}
-                className={`text-left font-serif text-lg py-1 w-full block border-b border-white/5 ${
-                  isActive('/services') ? 'text-[#C5A059]' : 'text-white/60'
+                className={`text-left font-serif text-lg py-1 w-full block border-b border-white/10 ${
+                  isActive('/services') ? 'text-[#FBBF24]' : 'text-white/70'
                 }`}
               >
                 All Services
               </Link>
-              <div className="grid grid-cols-2 gap-2 pl-3 pb-3 border-b border-white/5">
+              <div className="grid grid-cols-2 gap-2 pl-3 pb-3 border-b border-white/10">
                 {SERVICE_CATEGORIES.map((cat) => (
                   <Link
                     key={cat.id}
                     href={getViewHref('services', { categoryId: cat.id })}
                     onClick={closeMenus}
-                    className="text-left text-xs text-white/50 hover:text-[#C5A059] py-1.5 flex items-center gap-1.5"
+                    className="text-left text-xs text-white/55 hover:text-[#FBBF24] py-1.5 flex items-center gap-1.5"
                   >
                     <span>{cat.emoji}</span>
                     <span className="truncate">{cat.name}</span>
@@ -258,8 +240,8 @@ export function Header() {
             <Link
               href="/about"
               onClick={closeMenus}
-              className={`text-left font-serif text-lg py-1 border-b border-white/5 ${
-                isActive('/about') ? 'text-[#C5A059]' : 'text-white/80'
+              className={`text-left font-serif text-lg py-1 border-b border-white/10 ${
+                isActive('/about') ? 'text-[#FBBF24]' : 'text-white/80'
               }`}
             >
               About Company Standards
@@ -268,8 +250,8 @@ export function Header() {
             <Link
               href="/areas"
               onClick={closeMenus}
-              className={`text-left font-serif text-lg py-1 border-b border-white/5 ${
-                isActive('/areas') ? 'text-[#C5A059]' : 'text-white/80'
+              className={`text-left font-serif text-lg py-1 border-b border-white/10 ${
+                isActive('/areas') ? 'text-[#FBBF24]' : 'text-white/80'
               }`}
             >
               Service Postcodes Covered
@@ -278,7 +260,7 @@ export function Header() {
             <Link
               href="/#faq"
               onClick={closeMenus}
-              className="text-left font-serif text-lg py-1 border-b border-white/5 text-white/80 hover:text-[#C5A059]"
+              className="text-left font-serif text-lg py-1 border-b border-white/10 text-white/80 hover:text-[#FBBF24]"
             >
               Plumbing FAQ
             </Link>
@@ -286,28 +268,12 @@ export function Header() {
             <Link
               href="/contact"
               onClick={closeMenus}
-              className={`text-left font-serif text-lg py-1 border-b border-white/5 ${
-                isActive('/contact') ? 'text-[#C5A059]' : 'text-white/80'
+              className={`text-left font-serif text-lg py-1 border-b border-white/10 ${
+                isActive('/contact') ? 'text-[#FBBF24]' : 'text-white/80'
               }`}
             >
               Contact Us
             </Link>
-
-            <div className="pt-3 flex flex-col gap-3">
-              <a
-                href={BUSINESS_INFO.phoneHref}
-                className="w-full text-center bg-[#C5A059] hover:bg-[#b08e4d] text-black font-bold uppercase tracking-wider py-3 text-xs font-mono flex items-center justify-center gap-2"
-              >
-                <Phone className="h-4 w-4" /> Call Priority: {BUSINESS_INFO.phone}
-              </a>
-              <Link
-                href="/booking"
-                onClick={closeMenus}
-                className="w-full text-center border border-[#C5A059] text-[#C5A059] hover:bg-[#C5A059]/10 font-bold uppercase tracking-wider py-3 text-xs font-mono"
-              >
-                Book Priority Repair Wizard
-              </Link>
-            </div>
           </div>
         </div>
       )}

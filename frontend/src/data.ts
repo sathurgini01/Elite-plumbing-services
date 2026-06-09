@@ -1,7 +1,7 @@
 import { ServiceCategory } from './types';
 
 export const BUSINESS_INFO = {
-  name: 'Elite Plumbers Services',
+  name: 'Elite Plumbing Services',
   phone: '020 8015 7153',
   phoneHref: 'tel:+442080157153',
   email: 'info@eliteplumbingservices.co.uk',

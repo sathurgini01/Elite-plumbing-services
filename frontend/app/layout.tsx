@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="min-h-screen bg-[#0A0A0B] text-[#E0E0E0] flex flex-col font-sans antialiased">
+        <div className="min-h-screen bg-[#050505] text-[#E5E7EB] flex flex-col font-sans antialiased">
           <EmergencyBar />
           <Header />
           <main className="flex-1">{children}</main>
