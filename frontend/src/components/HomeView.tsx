@@ -13,7 +13,8 @@ import {
   Clock, 
   Wrench, 
   ChevronRight, 
-  AlertTriangle 
+  AlertTriangle,
+  MapPin 
 } from 'lucide-react';
 import { BUSINESS_INFO, SERVICE_CATEGORIES, TESTIMONIALS } from '../data';
 import { ViewState } from '../types';
@@ -362,98 +363,132 @@ export function HomeView() {
         </div>
       </section>
 
-      {/* SECTION 4: WHY CHOOSE US (BENTO INSPIRED) */}
+      {/* SECTION 4: WHY CHOOSE US */}
       <section id="why-choose-us" className="bg-[#050505] py-20 text-[#E5E7EB] border-b border-white/10 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Story segment */}
-            <div className="lg:col-span-5 space-y-6">
-              <span className="text-[10px] text-[#FBBF24] font-mono uppercase tracking-[0.3em] block">Company Legacy</span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            <div className="lg:col-span-6">
+              <span className="text-[10px] text-[#FBBF24] font-mono uppercase tracking-[0.3em] block mb-3">Bespoke Plumbing Perfected</span>
               <h2 className="text-3xl md:text-5xl font-serif leading-tight text-white">
-                Bespoke Plumbing <br />
-                <span className="italic text-[#FBBF24]">Perfected</span>.
+                Why choose us
               </h2>
-              <p className="text-white/50 text-xs sm:text-sm font-light leading-relaxed">
-                Elite Plumbing Services is defined by master craftsmen, premium technology, and flawless execution. Every team member passes meticulous background and technical validations.
-              </p>
-              
-              <ul className="space-y-3 font-mono text-[11px] text-white/70">
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="h-4 w-4 text-[#FBBF24]" />
-                  <span>Licensed Gas Safe engineering team</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="h-4 w-4 text-[#FBBF24]" />
-                  <span>Full £5,000,000 public liability guarantee</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="h-4 w-4 text-[#FBBF24]" />
-                  <span>Always transparent fixed client layouts</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="h-4 w-4 text-[#FBBF24]" />
-                  <span>Exclusive 12-month workmanship assurance</span>
-                </li>
-              </ul>
+              <div className="mt-5 h-1 w-24 bg-[#FBBF24]"></div>
 
-              <div className="mt-8 bg-[#0B1220] border border-white/10 rounded-sm p-5 flex items-center gap-4">
-                <div className="bg-[#FBBF24]/10 p-2.5 rounded-sm text-[#FBBF24]">
-                  <Clock className="h-6 w-6" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-xs uppercase tracking-wider text-white">Active Dispatch Priority</h4>
-                  <p className="text-xs text-white/50 mt-0.5 font-light">Average dispatch time currently clocked at <strong className="text-[#FBBF24] font-mono">34 minutes</strong>.</p>
-                </div>
+              <div className="mt-9 space-y-7">
+                {[
+                  {
+                    icon: <Clock className="h-6 w-6" />,
+                    title: '24/7 availability',
+                    text: 'Our dispatch desk is open day and night for emergency plumbing, heating faults, and urgent property maintenance.',
+                  },
+                  {
+                    icon: <CheckCircle className="h-6 w-6" />,
+                    title: 'Clear & upfront pricing',
+                    text: 'We explain the work, confirm the estimate, and agree pricing before repairs begin.',
+                  },
+                  {
+                    icon: <Star className="h-6 w-6" />,
+                    title: 'Trusted London engineers',
+                    text: 'Gas Safe registered plumbers with insured workmanship and careful clean-up after every visit.',
+                  },
+                  {
+                    icon: <Wrench className="h-6 w-6" />,
+                    title: 'Fast response time',
+                    text: 'Emergency jobs are prioritised to the closest available engineer, with typical arrival in 30-60 minutes where possible.',
+                  },
+                ].map((item) => (
+                  <div key={item.title} className="flex gap-5">
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#FBBF24]/50 bg-[#FBBF24]/10 text-[#FBBF24]">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-white tracking-wide">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-sm leading-7 text-white/55 font-light">
+                        {item.text}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
+
+              <button
+                type="button"
+                onClick={() => navigate('booking')}
+                className="mt-10 inline-flex rounded-sm bg-[#FBBF24] px-8 py-4 text-xs font-bold uppercase tracking-widest text-[#0B1220] transition hover:bg-[#F59E0B]"
+              >
+                Book Now
+              </button>
             </div>
 
-            {/* Right bento items */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-[#0B1220] border border-white/5 rounded-sm p-6 flex flex-col justify-between h-48">
-                <Wrench className="h-7 w-7 text-[#FBBF24] mb-4" />
-                <div>
-                  <h3 className="font-bold text-xs uppercase tracking-[0.1em] text-white">I. Precision Diagnostics</h3>
-                  <p className="text-xs text-white/40 tracking-normal leading-relaxed mt-1 font-light">
-                    Locating internal structural stress and micro-leaks via custom endoscopic feeds and wave detectors.
-                  </p>
-                </div>
+            <div className="relative min-h-[420px] lg:col-span-6 overflow-hidden rounded-sm border border-white/10 shadow-2xl">
+              <Image
+                src="/images/homepage-hero-van.png"
+                alt="Elite Plumbing Services van ready for London plumbing callouts"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover object-center brightness-[1.12] contrast-[1.06] saturate-[1.04]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/45 via-transparent to-transparent"></div>
+              <div className="absolute inset-x-0 bottom-0 h-1.5 bg-[#FBBF24]"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 5: AREAS COVERED PREVIEW */}
+      <section id="homepage-areas-preview" className="bg-[#050505] py-20 border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="overflow-hidden rounded-sm border border-white/10 bg-[#0B1220] shadow-2xl">
+            <div className="grid grid-cols-1 lg:grid-cols-12">
+              <div className="relative min-h-[300px] lg:col-span-6">
+                <Image
+                  src="/images/plumber-hero.png"
+                  alt="Professional plumber working on a kitchen plumbing repair"
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover object-center brightness-[1.05] contrast-[1.04]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/65 via-transparent to-transparent"></div>
+                <div className="absolute inset-x-0 bottom-0 h-1.5 bg-[#FBBF24]"></div>
               </div>
 
-              <div className="bg-[#0B1220] border border-white/5 rounded-sm p-6 flex flex-col justify-between h-48">
-                <ShieldCheck className="h-7 w-7 text-[#FBBF24] mb-4" />
-                <div>
-                  <h3 className="font-bold text-xs uppercase tracking-[0.1em] text-white">II. Full Compliance</h3>
-                  <p className="text-xs text-white/40 tracking-normal leading-relaxed mt-1 font-light">
-                    Every audit includes complete mechanical safety diagnostics and stopcock flow speed validations.
-                  </p>
-                </div>
-              </div>
+              <div className="lg:col-span-6 p-6 sm:p-8 lg:p-12 flex flex-col justify-center">
+                <span className="text-[10px] text-[#FBBF24] font-mono uppercase tracking-[0.25em] block mb-3">
+                  Areas Covered
+                </span>
+                <h2 className="text-3xl md:text-5xl font-serif text-white leading-tight">
+                  We serve major London boroughs
+                </h2>
+                <div className="mt-5 h-1 w-24 bg-[#FBBF24]"></div>
+                <p className="mt-6 text-sm leading-7 text-white/55 font-light max-w-xl">
+                  Fast plumbing and heating visits across West, South West, Central, North, East, and South East London postcode zones.
+                </p>
 
-              <div className="bg-[#0B1220] border border-white/5 rounded-sm p-6 flex flex-col justify-between h-48">
-                <Clock className="h-7 w-7 text-[#FBBF24] mb-4" />
-                <div>
-                  <h3 className="font-bold text-xs uppercase tracking-[0.1em] text-white">III. Uninterrupted Support</h3>
-                  <p className="text-xs text-white/40 tracking-normal leading-relaxed mt-1 font-light">
-                    No holiday markups. Our direct dispatchers operate 24 hours daily with zero premium weekend escalations.
-                  </p>
+                <div className="mt-7 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {['Kensington', 'Fulham', 'Westminster', 'Clapham', 'Wandsworth', 'Greenwich'].map((area) => (
+                    <span key={area} className="inline-flex items-center gap-2 rounded-sm border border-white/10 bg-[#050505] px-3 py-2 text-xs text-white/70">
+                      <MapPin className="h-3.5 w-3.5 text-[#FBBF24]" />
+                      {area}
+                    </span>
+                  ))}
                 </div>
-              </div>
 
-              <div className="bg-[#0B1220] border border-white/5 rounded-sm p-6 flex flex-col justify-between h-48">
-                <Star className="h-7 w-7 text-[#FBBF24] mb-4" />
-                <div>
-                  <h3 className="font-bold text-xs uppercase tracking-[0.1em] text-white">IV. Elite Guarantee</h3>
-                  <p className="text-xs text-white/40 tracking-normal leading-relaxed mt-1 font-light">
-                    Every hardware fitting is warrantied for a full calendar year. Flawless longevity is our standard.
-                  </p>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => navigate('areas')}
+                  className="mt-9 inline-flex w-fit items-center gap-2 rounded-sm bg-[#FBBF24] px-7 py-4 text-xs font-bold uppercase tracking-widest text-[#0B1220] transition hover:bg-[#F59E0B]"
+                >
+                  View All Locations <ArrowRight className="h-4 w-4" />
+                </button>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 5: REAL TESTIMONIAL CAROUSEL */}
+      {/* SECTION 6: REAL TESTIMONIAL CAROUSEL */}
       <section id="reviews-carousel" className="bg-[#050505] py-20 text-[#E5E7EB] border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center max-w-2xl mx-auto mb-16">
@@ -511,7 +546,7 @@ export function HomeView() {
         </div>
       </section>
 
-      {/* SECTION 6: SITE AUDIT ESTIMATOR */}
+      {/* SECTION 7: SITE AUDIT ESTIMATOR */}
       <section id="site-audit-notes" className="bg-[#050505] py-20 text-[#E5E7EB] border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -618,7 +653,7 @@ export function HomeView() {
         </div>
       </section>
 
-      {/* SECTION 7: PLUMBING FAQ */}
+      {/* SECTION 8: PLUMBING FAQ */}
       <section id="faq" className="bg-[#050505] py-20 text-[#E5E7EB] border-b border-white/10 scroll-mt-28">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center max-w-2xl mx-auto mb-14">
@@ -673,7 +708,7 @@ export function HomeView() {
         </div>
       </section>
 
-      {/* SECTION 8: FLOOD RESPONSIVE CALL TO ACTION BANNER */}
+      {/* SECTION 9: FLOOD RESPONSIVE CALL TO ACTION BANNER */}
       <section id="hompeage-emergency-cta" className="bg-[#050505] text-[#E5E7EB] py-16 text-center relative overflow-hidden">
         {/* Abstract background graphics */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">

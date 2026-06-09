@@ -4,9 +4,24 @@ import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { POSTCODE_AREAS, BUSINESS_INFO } from '../data';
 import { getViewHref } from '../navigation';
-import { Search, Map, CheckCircle2, AlertTriangle, Phone, ShieldCheck } from 'lucide-react';
+import { Search, Map, CheckCircle2, AlertTriangle, Phone, ShieldCheck, MapPin } from 'lucide-react';
 
 const UK_POSTCODE_OR_PREFIX_REGEX = /^[A-Z]{1,2}\d[A-Z\d]?(?:\s*\d[A-Z]{2})?$/i;
+
+const locationGroups = [
+  {
+    title: 'West London',
+    items: ['Kensington', 'Holland Park', 'Hammersmith', 'Ealing', 'Chiswick', 'Shepherds Bush', 'Bayswater', 'Notting Hill'],
+  },
+  {
+    title: 'South West London',
+    items: ['Chelsea', 'Fulham', 'Putney', 'Battersea', 'Barnes', 'Richmond', 'Clapham', 'Wandsworth', 'South Kensington', 'Wimbledon'],
+  },
+  {
+    title: 'Central London',
+    items: ['Mayfair', 'Westminster', 'Pimlico', 'Belgravia', 'Earls Court', 'Knightsbridge', 'Marylebone', 'Soho'],
+  },
+];
 
 export function AreasCoveredView() {
   const router = useRouter();
@@ -42,16 +57,16 @@ export function AreasCoveredView() {
 
   return (
     <div id="coverage-view" className="font-sans text-[#E5E7EB] bg-[#050505] py-16 px-4">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         
         {/* Coverage Header info */}
         <div className="text-center max-w-2xl mx-auto mb-12">
           <span className="text-[10px] text-[#FBBF24] font-mono uppercase tracking-[0.25em] block mb-2">Territory Coverage</span>
           <h1 className="text-3xl md:text-5xl font-serif text-white tracking-tight lead-tight">
-            Service Areas & Dispatch Radius
+            Areas We Cover Across London
           </h1>
           <p className="text-white/50 mt-3 text-xs sm:text-sm font-light">
-            We operate fully equipped radio-dispatched vehicles across a set network of London postcodes, ensuring we reach active leak calls inside 30-60 minutes.
+            Fast, reliable plumbing and heating support across West, South West, Central, North, East, and South East London.
           </p>
         </div>
 
@@ -154,48 +169,72 @@ export function AreasCoveredView() {
         </div>
 
         {/* FULL TERRITORIES DIRECTORY */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* List description column */}
-          <div className="lg:col-span-4 space-y-4">
-            <div className="bg-[#FBBF24]/10 text-[#FBBF24] p-3 rounded-sm inline-block">
-              <Map className="h-7 w-7" />
+        <section id="all-covered-locations" className="rounded-sm border border-white/10 bg-[#0B1220] p-6 md:p-10 shadow-2xl scroll-mt-28">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            <div className="lg:col-span-4 space-y-4">
+              <div className="bg-[#FBBF24]/10 text-[#FBBF24] p-3 rounded-sm inline-block">
+                <Map className="h-7 w-7" />
+              </div>
+              <h2 className="text-2xl md:text-3xl font-serif text-white">
+                West, South West & Central London
+              </h2>
+              <p className="text-white/55 text-xs sm:text-sm leading-relaxed font-light">
+                Local engineers cover residential and commercial plumbing across priority postcode zones. If your area is listed below, you can book online or call for emergency availability.
+              </p>
+              <div className="space-y-2 rounded-sm border border-white/5 bg-[#050505] p-4 text-[11px] font-mono text-white/60">
+                <div className="flex items-start gap-2">
+                  <ShieldCheck className="h-4 w-4 text-[#FBBF24] shrink-0 mt-0.5" />
+                  <span>30-60m active response for leaks and burst pipes</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <ShieldCheck className="h-4 w-4 text-[#FBBF24] shrink-0 mt-0.5" />
+                  <span>Same-day scheduled work across active London zones</span>
+                </div>
+              </div>
             </div>
-            <h2 className="text-2xl font-serif text-white">
-              London & Suburban Active Boroughs
-            </h2>
-            <p className="text-white/50 text-xs sm:text-sm leading-relaxed font-light">
-              We monitor vehicular grids continuously. If your property is centered inside any of the highlighted postcode regions in the list, you can expect same-day scheduling.
-            </p>
-            <div className="bg-[#0B1220] p-4 rounded-sm border border-white/5 text-[11px] font-mono text-white/60 space-y-2">
-              <div className="flex items-start gap-2">
-                <ShieldCheck className="h-4 w-4 text-[#FBBF24] shrink-0 mt-0.5" />
-                <span>30-60m Active Response for leaks & burst pipes</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <ShieldCheck className="h-4 w-4 text-[#FBBF24] shrink-0 mt-0.5" />
-                <span>Complementary shut-off valve inspection on site</span>
-              </div>
+
+            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-7">
+              {locationGroups.map((group) => (
+                <div key={group.title}>
+                  <h3 className="mb-4 text-xl font-serif text-white">{group.title}</h3>
+                  <div className="flex flex-wrap gap-2.5">
+                    {group.items.map((item) => (
+                      <span
+                        key={item}
+                        className="inline-flex items-center gap-2 rounded-sm border border-white/10 bg-[#050505] px-3.5 py-2 text-xs text-white/75 shadow-sm"
+                      >
+                        <MapPin className="h-3.5 w-3.5 shrink-0 text-[#FBBF24]" />
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Columns of Covered lists */}
-          <div className="lg:col-span-8 bg-[#0B1220] rounded-sm border border-white/10 p-6 md:p-8 shadow-xs grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-h-[480px] overflow-y-auto scrollbar-thin">
-            {POSTCODE_AREAS.map((item) => (
-              <div 
-                key={item.code} 
-                className="hover:bg-white/5 border border-white/5 px-3.5 py-3 rounded-sm flex items-center justify-between transition-colors"
-               >
-                <div>
-                  <span className="font-mono text-xs font-bold text-[#FBBF24] block">{item.code}</span>
-                  <span className="text-[10px] text-white/40 font-mono tracking-tight block truncate max-w-[120px] uppercase">{item.area}</span>
+          <div className="mt-10 border-t border-white/10 pt-8">
+            <h3 className="mb-5 font-mono text-xs uppercase tracking-[0.2em] text-[#FBBF24]">
+              Active Postcode Prefixes
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 max-h-[420px] overflow-y-auto pr-1 scrollbar-thin">
+              {POSTCODE_AREAS.map((item) => (
+                <div 
+                  key={item.code} 
+                  className="hover:bg-white/5 border border-white/5 px-3.5 py-3 rounded-sm flex items-center justify-between transition-colors"
+                >
+                  <div>
+                    <span className="font-mono text-xs font-bold text-[#FBBF24] block">{item.code}</span>
+                    <span className="text-[10px] text-white/45 font-mono tracking-tight block truncate max-w-[150px] uppercase">{item.area}</span>
+                  </div>
+                  <span className="text-[9px] bg-[#FBBF24]/10 text-[#FBBF24] font-mono px-2 py-0.5 rounded-sm uppercase tracking-wider">
+                    Active
+                  </span>
                 </div>
-                <span className="text-[9px] bg-[#FBBF24]/10 text-[#FBBF24] font-mono px-2 py-0.5 rounded-sm uppercase tracking-wider">
-                  Active
-                </span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </section>
 
       </div>
     </div>
