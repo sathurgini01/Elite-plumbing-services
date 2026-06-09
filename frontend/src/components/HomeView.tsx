@@ -24,6 +24,30 @@ export function HomeView() {
   const [quickCat, setQuickCat] = useState('');
   const [quickPostcode, setQuickPostcode] = useState('');
   const [postcodeError, setPostcodeError] = useState('');
+  const [openFaq, setOpenFaq] = useState(0);
+
+  const faqs = [
+    {
+      question: 'Do plumbers deal with heating?',
+      answer: 'Yes. Our Gas Safe registered engineers work on heating systems, radiators, hot water faults, boilers, bathroom pipework, kitchens, and general plumbing repairs.',
+    },
+    {
+      question: 'Do you charge a call out fee?',
+      answer: 'No. We provide clear pricing before work begins, and our standard policy is no separate call-out fee for booked visits inside our active London service area.',
+    },
+    {
+      question: 'How quickly can your plumbing company send out an engineer?',
+      answer: 'For emergency plumbing issues such as burst pipes, flooding, or no hot water, our target response is usually 30-60 minutes depending on postcode and engineer availability.',
+    },
+    {
+      question: 'What should I do if I get a water leak?',
+      answer: 'Turn off your stopcock if it is safe, switch off nearby electrics, move valuables away from the leak, and call our emergency line so an engineer can isolate and repair the fault.',
+    },
+    {
+      question: 'Can I book non-emergency plumbing work?',
+      answer: 'Yes. You can book scheduled repairs, installations, inspections, radiator work, drainage jobs, bathroom plumbing, kitchen plumbing, and landlord maintenance through the booking form.',
+    },
+  ];
 
   const navigate = (view: ViewState, params?: Record<string, unknown>) => {
     router.push(getViewHref(view, params));
@@ -73,9 +97,15 @@ export function HomeView() {
                 ★ Est. 1984 • London • 24/7 Priority
               </div>
 
-              <h1 id="hero-title" className="text-5xl sm:text-6xl lg:text-7xl font-serif leading-[1.1] text-white">
-                The Art of <br />
-                <span className="italic text-[#C5A059]">Perfected</span> Flow.
+              <h1 id="hero-title" className="hero-title text-5xl sm:text-6xl lg:text-7xl font-serif leading-[1.1] text-white">
+                <span className="hero-title-line">
+                  <span className="hero-word">The</span>{' '}
+                  <span className="hero-word hero-word-delay-1">Art</span>{' '}
+                  <span className="hero-word hero-word-delay-2">of</span>
+                </span>
+                <br />
+                <span className="hero-word hero-word-gold hero-word-delay-3 italic text-[#C5A059]">Perfected</span>{' '}
+                <span className="hero-word hero-word-delay-4">Flow.</span>
               </h1>
               
               <p id="hero-subtitle" className="text-base sm:text-lg text-white/50 leading-relaxed max-w-xl font-light">
@@ -450,7 +480,62 @@ export function HomeView() {
         </div>
       </section>
 
-      {/* SECTION 6: FLOOD RESPONSIVE CALL TO ACTION BANNER */}
+      {/* SECTION 6: PLUMBING FAQ */}
+      <section id="faq" className="bg-[#0A0A0B] py-20 text-[#E0E0E0] border-b border-white/10 scroll-mt-28">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <span className="text-[10px] text-[#C5A059] font-mono tracking-[0.25em] uppercase block mb-2">
+              Client Questions
+            </span>
+            <h2 className="text-3xl md:text-5xl font-serif text-white">
+              Plumbing FAQs
+            </h2>
+            <p className="text-white/50 text-xs sm:text-sm mt-3 font-light leading-relaxed">
+              Clear answers for emergency callouts, heating faults, leaks, and scheduled plumbing work.
+            </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto bg-[#0E0E10] border border-white/10 rounded-sm shadow-xl">
+            <div className="divide-y divide-white/10">
+              {faqs.map((faq, index) => {
+                const isOpen = openFaq === index;
+
+                return (
+                  <div key={faq.question} className="px-5 sm:px-8">
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaq(isOpen ? -1 : index)}
+                      className="w-full flex items-center justify-between gap-6 py-6 text-left group"
+                      aria-expanded={isOpen}
+                    >
+                      <span className={`text-base md:text-xl font-serif leading-snug transition-colors ${
+                        isOpen ? 'text-[#C5A059]' : 'text-white group-hover:text-[#C5A059]'
+                      }`}>
+                        {faq.question}
+                      </span>
+                      <span className={`h-9 w-9 rounded-sm border flex items-center justify-center text-2xl leading-none font-light shrink-0 transition-all ${
+                        isOpen
+                          ? 'border-[#C5A059] bg-[#C5A059] text-black'
+                          : 'border-white/10 bg-[#050505] text-[#C5A059] group-hover:border-[#C5A059]/50'
+                      }`}>
+                        {isOpen ? '-' : '+'}
+                      </span>
+                    </button>
+
+                    {isOpen && (
+                      <p className="pb-7 text-xs sm:text-sm leading-7 text-white/55 font-light max-w-4xl">
+                        {faq.answer}
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 7: FLOOD RESPONSIVE CALL TO ACTION BANNER */}
       <section id="hompeage-emergency-cta" className="bg-[#050505] text-[#E0E0E0] py-16 text-center relative overflow-hidden">
         {/* Abstract background graphics */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
