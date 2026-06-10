@@ -58,6 +58,9 @@ const STEP_LABELS = [
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const UK_PHONE_REGEX = /^(?:\+44|0)\d{10}$/;
 const UK_POSTCODE_REGEX = /^[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}$/i;
+const CARD_NUMBER_REGEX = /^\d{13,19}$/;
+const CARD_EXPIRY_REGEX = /^(0[1-9]|1[0-2])\/\d{2}$/;
+const CARD_CVC_REGEX = /^\d{3,4}$/;
 
 export function BookingWizard({ initialParams }: BookingWizardProps) {
   const router = useRouter();
@@ -80,6 +83,11 @@ export function BookingWizard({ initialParams }: BookingWizardProps) {
     address: '',
     postcode: '',
     notes: '',
+    paymentMethod: '',
+    cardholderName: '',
+    cardNumber: '',
+    cardExpiry: '',
+    cardCvc: '',
   });
 
   // Client validation state
@@ -213,6 +221,27 @@ export function BookingWizard({ initialParams }: BookingWizardProps) {
       nextErrors.notes = 'Please provide a brief details description of your custom plumbing / heating concern.';
     }
 
+    if (!formData.paymentMethod) {
+      nextErrors.paymentMethod = 'Please choose a payment method.';
+    }
+
+    if (formData.paymentMethod === 'online_card') {
+      const cardNumber = formData.cardNumber.replace(/\s/g, '');
+
+      if (!formData.cardholderName.trim()) {
+        nextErrors.cardholderName = 'Name on card is required.';
+      }
+      if (!CARD_NUMBER_REGEX.test(cardNumber)) {
+        nextErrors.cardNumber = 'Enter a valid card number.';
+      }
+      if (!CARD_EXPIRY_REGEX.test(formData.cardExpiry.trim())) {
+        nextErrors.cardExpiry = 'Use MM/YY format.';
+      }
+      if (!CARD_CVC_REGEX.test(formData.cardCvc.trim())) {
+        nextErrors.cardCvc = 'Enter a valid CVC.';
+      }
+    }
+
     setErrors(nextErrors);
     return Object.keys(nextErrors).length === 0;
   };
@@ -307,6 +336,18 @@ export function BookingWizard({ initialParams }: BookingWizardProps) {
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-[#FBBF24] shrink-0 mt-0.5" />
                 <div className="space-y-1">
+                  <strong className="font-bold text-white uppercase tracking-wider text-[11px] font-mono">Payment Choice</strong>
+                  <p className="text-white/50 text-xs font-light">
+                    {formData.paymentMethod === 'online_card'
+                      ? 'Online card payment selected. Secure payment gateway connection can be added next.'
+                      : 'Cash payment selected. Customer pays the engineer after the repair is fixed.'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-[#FBBF24] shrink-0 mt-0.5" />
+                <div className="space-y-1">
                   <strong className="font-bold text-white uppercase tracking-wider text-[11px] font-mono">Calibrated Operational Window</strong>
                   <span className="inline-block mt-2 text-[10px] uppercase font-mono bg-[#FBBF24]/10 text-[#FBBF24] border border-[#FBBF24]/20 px-2.5 py-1 rounded-sm">
                     {getDispatchStatus()}
@@ -352,6 +393,11 @@ export function BookingWizard({ initialParams }: BookingWizardProps) {
                     address: '',
                     postcode: '',
                     notes: '',
+                    paymentMethod: '',
+                    cardholderName: '',
+                    cardNumber: '',
+                    cardExpiry: '',
+                    cardCvc: '',
                   });
                 }}
                 className="bg-[#050505] border border-white/10 hover:bg-white/5 text-white/80 font-bold font-mono uppercase tracking-widest text-center py-4 px-8 rounded-sm text-xs cursor-pointer"
@@ -852,6 +898,154 @@ export function BookingWizard({ initialParams }: BookingWizardProps) {
                     )}
                   </div>
 
+                  <div className="rounded-sm border border-white/10 bg-[#050505] p-5">
+                    <div className="border-b border-white/5 pb-4">
+                      <h3 className="text-lg font-serif text-white">Payment choice</h3>
+                      <p className="mt-1 text-xs text-white/40 font-light">
+                        Choose how you want to pay. Final price is confirmed before work starts.
+                      </p>
+                    </div>
+
+                    {errors.paymentMethod && (
+                      <p className="mt-4 text-red-500 text-xs font-mono flex items-center gap-1.5">
+                        <AlertCircle className="h-4 w-4 shrink-0" /> {errors.paymentMethod}
+                      </p>
+                    )}
+
+                    <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          updateField({
+                            paymentMethod: 'cash_after_repair',
+                            cardholderName: '',
+                            cardNumber: '',
+                            cardExpiry: '',
+                            cardCvc: '',
+                          })
+                        }
+                        className={`rounded-sm border p-4 text-left transition-all ${
+                          formData.paymentMethod === 'cash_after_repair'
+                            ? 'border-[#FBBF24] bg-[#FBBF24]/10'
+                            : 'border-white/10 bg-[#0B1220] hover:border-[#FBBF24]/35'
+                        }`}
+                      >
+                        <span className="flex items-center justify-between gap-3">
+                          <span className="font-mono text-xs font-bold uppercase tracking-widest text-white">
+                            Cash after repair
+                          </span>
+                          {formData.paymentMethod === 'cash_after_repair' && <CheckCircle className="h-4 w-4 text-[#FBBF24]" />}
+                        </span>
+                        <span className="mt-2 block text-xs leading-5 text-white/45">
+                          Pay directly to the plumber after the work is fixed and the price is confirmed.
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => updateField({ paymentMethod: 'online_card' })}
+                        className={`rounded-sm border p-4 text-left transition-all ${
+                          formData.paymentMethod === 'online_card'
+                            ? 'border-[#FBBF24] bg-[#FBBF24]/10'
+                            : 'border-white/10 bg-[#0B1220] hover:border-[#FBBF24]/35'
+                        }`}
+                      >
+                        <span className="flex items-center justify-between gap-3">
+                          <span className="font-mono text-xs font-bold uppercase tracking-widest text-white">
+                            Online card
+                          </span>
+                          {formData.paymentMethod === 'online_card' && <CheckCircle className="h-4 w-4 text-[#FBBF24]" />}
+                        </span>
+                        <span className="mt-2 block text-xs leading-5 text-white/45">
+                          Add card details for online payment. Real payment gateway can connect later.
+                        </span>
+                      </button>
+                    </div>
+
+                    {formData.paymentMethod === 'online_card' && (
+                      <div className="mt-5 rounded-sm border border-[#FBBF24]/20 bg-[#0B1220] p-4">
+                        <div className="mb-4 flex items-start gap-2 text-xs text-white/45">
+                          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#FBBF24]" />
+                          <p>
+                            Card fields are frontend preview only. In production, connect Stripe, PayPal, or another secure payment gateway.
+                          </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                          <div className="sm:col-span-2">
+                            <label className="block text-[10px] font-mono uppercase tracking-wider font-bold text-white/50 mb-1.5">
+                              Name on Card
+                            </label>
+                            <input
+                              type="text"
+                              value={formData.cardholderName}
+                              onChange={(e) => updateField({ cardholderName: e.target.value })}
+                              className={`w-full rounded-sm border bg-[#050505] px-3.5 py-3 text-xs focus:outline-none focus:ring-1 focus:border-[#FBBF24] focus:ring-[#FBBF24]/30 text-white ${
+                                errors.cardholderName ? 'border-red-500/40' : 'border-white/10'
+                              }`}
+                              placeholder="e.g. Sathurgini Raj"
+                            />
+                            {errors.cardholderName && <p className="text-red-500 text-[10px] mt-1 font-mono">{errors.cardholderName}</p>}
+                          </div>
+
+                          <div className="sm:col-span-2">
+                            <label className="block text-[10px] font-mono uppercase tracking-wider font-bold text-white/50 mb-1.5">
+                              Card Number
+                            </label>
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              value={formData.cardNumber}
+                              onChange={(e) => updateField({ cardNumber: e.target.value.replace(/[^\d\s]/g, '') })}
+                              className={`w-full rounded-sm border bg-[#050505] px-3.5 py-3 text-xs font-mono focus:outline-none focus:ring-1 focus:border-[#FBBF24] focus:ring-[#FBBF24]/30 text-white ${
+                                errors.cardNumber ? 'border-red-500/40' : 'border-white/10'
+                              }`}
+                              placeholder="1234 1234 1234 1234"
+                              maxLength={23}
+                            />
+                            {errors.cardNumber && <p className="text-red-500 text-[10px] mt-1 font-mono">{errors.cardNumber}</p>}
+                          </div>
+
+                          <div>
+                            <label className="block text-[10px] font-mono uppercase tracking-wider font-bold text-white/50 mb-1.5">
+                              Expiry
+                            </label>
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              value={formData.cardExpiry}
+                              onChange={(e) => updateField({ cardExpiry: e.target.value.replace(/[^\d/]/g, '') })}
+                              className={`w-full rounded-sm border bg-[#050505] px-3.5 py-3 text-xs font-mono focus:outline-none focus:ring-1 focus:border-[#FBBF24] focus:ring-[#FBBF24]/30 text-white ${
+                                errors.cardExpiry ? 'border-red-500/40' : 'border-white/10'
+                              }`}
+                              placeholder="MM/YY"
+                              maxLength={5}
+                            />
+                            {errors.cardExpiry && <p className="text-red-500 text-[10px] mt-1 font-mono">{errors.cardExpiry}</p>}
+                          </div>
+
+                          <div>
+                            <label className="block text-[10px] font-mono uppercase tracking-wider font-bold text-white/50 mb-1.5">
+                              CVC
+                            </label>
+                            <input
+                              type="password"
+                              inputMode="numeric"
+                              value={formData.cardCvc}
+                              onChange={(e) => updateField({ cardCvc: e.target.value.replace(/\D/g, '') })}
+                              className={`w-full rounded-sm border bg-[#050505] px-3.5 py-3 text-xs font-mono focus:outline-none focus:ring-1 focus:border-[#FBBF24] focus:ring-[#FBBF24]/30 text-white ${
+                                errors.cardCvc ? 'border-red-500/40' : 'border-white/10'
+                              }`}
+                              placeholder="123"
+                              maxLength={4}
+                            />
+                            {errors.cardCvc && <p className="text-red-500 text-[10px] mt-1 font-mono">{errors.cardCvc}</p>}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
                   {/* SUMMARY SPEC SHEET */}
                   <div className="bg-[#050505] text-white/80 rounded-sm p-5 border border-white/10 text-xs">
                     <div className="flex items-center gap-1.5 font-mono text-xs text-[#FBBF24] mb-3 uppercase tracking-[0.1em] border-b border-white/5 pb-2">
@@ -874,6 +1068,16 @@ export function BookingWizard({ initialParams }: BookingWizardProps) {
                       <div>
                         <span className="text-white/40 block text-[10px] font-mono uppercase">Operational radius mode</span>
                         <strong className="text-red-500 text-xs font-mono">{formData.isEmergency ? 'EMERGENCY DISPATCH' : 'SCHEDULED MAINTENANCE'}</strong>
+                      </div>
+                      <div className="sm:col-span-2">
+                        <span className="text-white/40 block text-[10px] font-mono uppercase">Payment method</span>
+                        <strong className="text-[#FBBF24] font-mono text-xs">
+                          {formData.paymentMethod === 'online_card'
+                            ? 'ONLINE CARD'
+                            : formData.paymentMethod === 'cash_after_repair'
+                            ? 'CASH AFTER REPAIR'
+                            : 'NOT SELECTED'}
+                        </strong>
                       </div>
                     </div>
                   </div>

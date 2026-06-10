@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { ChevronDown, Menu, X } from 'lucide-react';
 import { SERVICE_CATEGORIES } from '../data';
 import { getViewHref } from '../navigation';
 
@@ -172,12 +172,16 @@ export function Header() {
             )}
           </div>
 
-          <Link id="nav-btn-about" href="/about" className={navClass('/about')}>
-            About
+          <Link id="nav-btn-my-bookings" href="/customer/bookings" className={navClass('/customer/bookings')}>
+            My Bookings
           </Link>
 
           <Link id="nav-btn-areas" href="/areas" className={navClass('/areas')}>
             Areas Covered
+          </Link>
+
+          <Link id="nav-btn-about" href="/about" className={navClass('/about')}>
+            About
           </Link>
 
           <Link id="nav-btn-faq" href="/#faq" className="hover:text-[#FBBF24] transition-colors cursor-pointer">
@@ -261,13 +265,13 @@ export function Header() {
             </div>
 
             <Link
-              href="/about"
+              href="/customer/bookings"
               onClick={closeMenus}
               className={`text-left font-serif text-lg py-1 border-b border-white/10 ${
-                isActive('/about') ? 'text-[#FBBF24]' : 'text-white/80'
+                isActive('/customer/bookings') ? 'text-[#FBBF24]' : 'text-white/80'
               }`}
             >
-              About Company Standards
+              My Bookings
             </Link>
 
             <Link
@@ -278,6 +282,16 @@ export function Header() {
               }`}
             >
               Service Postcodes Covered
+            </Link>
+
+            <Link
+              href="/about"
+              onClick={closeMenus}
+              className={`text-left font-serif text-lg py-1 border-b border-white/10 ${
+                isActive('/about') ? 'text-[#FBBF24]' : 'text-white/80'
+              }`}
+            >
+              About Company Standards
             </Link>
 
             <Link
@@ -318,6 +332,7 @@ export function Header() {
                 Sign Up
               </Link>
             </div>
+
           </div>
         </div>
       )}

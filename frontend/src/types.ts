@@ -10,6 +10,8 @@ export type PropertyType =
   | 'restaurant'
   | 'other';
 
+export type PaymentMethod = 'cash_after_repair' | 'online_card';
+
 export interface Service {
   id: string;
   name: string;
@@ -42,6 +44,11 @@ export interface BookingFormData {
   address: string;
   postcode: string;
   notes: string;
+  paymentMethod: PaymentMethod | '';
+  cardholderName: string;
+  cardNumber: string;
+  cardExpiry: string;
+  cardCvc: string;
 }
 
 export type ViewState = 'home' | 'services' | 'booking' | 'about' | 'areas' | 'contact';
