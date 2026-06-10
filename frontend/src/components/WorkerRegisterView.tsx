@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   AlertCircle,
   CheckCircle,
@@ -98,6 +99,7 @@ const initialForm: WorkerForm = {
 };
 
 export function WorkerRegisterView() {
+  const router = useRouter();
   const [formData, setFormData] = useState<WorkerForm>(initialForm);
   const [certificateFiles, setCertificateFiles] = useState<Record<CertificateFileGroup, File[]>>({
     gasSafe: [],
@@ -231,6 +233,7 @@ export function WorkerRegisterView() {
     }
 
     setSuccessMessage('Worker request is ready for admin review. Backend approval flow can connect next.');
+    router.push('/plumber/register/success');
   };
 
   return (
