@@ -189,6 +189,29 @@ export function Header() {
           </Link>
         </nav>
 
+        <div className="hidden md:flex items-center gap-2 text-xs tracking-widest uppercase font-semibold">
+          <Link
+            id="nav-btn-signin"
+            href="/signin"
+            className={`rounded-sm border border-white/15 px-4 py-2 text-white/75 transition-all hover:border-[#FBBF24]/50 hover:text-[#FBBF24] ${
+              isActive('/signin') ? 'border-[#FBBF24]/60 text-[#FBBF24]' : ''
+            }`}
+          >
+            Sign In
+          </Link>
+          <Link
+            id="nav-btn-signup"
+            href="/signup"
+            className={`rounded-sm border border-[#FBBF24] px-4 py-2 font-bold text-[#0B1220] transition-all ${
+              isActive('/signup')
+                ? 'bg-transparent text-[#FBBF24]'
+                : 'bg-[#FBBF24] hover:bg-transparent hover:text-[#FBBF24]'
+            }`}
+          >
+            Sign Up
+          </Link>
+        </div>
+
         <button
           id="menu-toggle-btn"
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -274,6 +297,27 @@ export function Header() {
             >
               Contact Us
             </Link>
+
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <Link
+                href="/signin"
+                onClick={closeMenus}
+                className={`rounded-sm border border-white/15 px-4 py-3 text-center text-xs font-bold uppercase tracking-widest transition-all ${
+                  isActive('/signin') ? 'border-[#FBBF24]/60 text-[#FBBF24]' : 'text-white/80 hover:border-[#FBBF24]/50 hover:text-[#FBBF24]'
+                }`}
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/signup"
+                onClick={closeMenus}
+                className={`rounded-sm border border-[#FBBF24] px-4 py-3 text-center text-xs font-bold uppercase tracking-widest transition-all ${
+                  isActive('/signup') ? 'bg-transparent text-[#FBBF24]' : 'bg-[#FBBF24] text-[#0B1220] hover:bg-transparent hover:text-[#FBBF24]'
+                }`}
+              >
+                Sign Up
+              </Link>
+            </div>
           </div>
         </div>
       )}

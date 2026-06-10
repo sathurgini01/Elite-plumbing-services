@@ -139,6 +139,10 @@ export function Footer() {
             <Link href="/areas" className="hover:text-[#FBBF24] transition-colors">
               Postal Areas
             </Link>
+            <span className="text-white/15">|</span>
+            <Link href="/terms" className="hover:text-[#FBBF24] transition-colors">
+              Terms
+            </Link>
           </div>
         </div>
       </div>

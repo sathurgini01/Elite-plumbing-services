@@ -424,8 +424,8 @@ export function HomeView() {
 
             <div className="relative min-h-[420px] lg:col-span-6 overflow-hidden rounded-sm border border-white/10 shadow-2xl">
               <Image
-                src="/images/homepage-hero-van.png"
-                alt="Elite Plumbing Services van ready for London plumbing callouts"
+                src="/images/why-choose-quality-plumbing.png"
+                alt="Professional plumber inspecting premium pipework and heating controls"
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover object-center brightness-[1.12] contrast-[1.06] saturate-[1.04]"
@@ -444,8 +444,8 @@ export function HomeView() {
             <div className="grid grid-cols-1 lg:grid-cols-12">
               <div className="relative min-h-[300px] lg:col-span-6">
                 <Image
-                  src="/images/plumber-hero.png"
-                  alt="Professional plumber working on a kitchen plumbing repair"
+                  src="/images/areas-covered-london-plumber.png"
+                  alt="Professional London plumber checking service coverage outside a townhouse"
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   className="object-cover object-center brightness-[1.05] contrast-[1.04]"
