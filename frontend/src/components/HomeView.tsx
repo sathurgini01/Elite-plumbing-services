@@ -217,6 +217,13 @@ export function HomeView() {
                   <CalendarDays className="h-4.5 w-4.5 text-[#FBBF24]" />
                   Book a Plumbing Visit
                 </button>
+                <button
+                  onClick={() => router.push('/plumber/register')}
+                  className="bg-black/45 hover:bg-[#07162A] text-white border border-[#FBBF24]/35 font-bold uppercase text-xs tracking-widest px-8 py-4 transition-all rounded-sm flex items-center justify-center gap-2"
+                >
+                  <Wrench className="h-4.5 w-4.5 text-[#FBBF24]" />
+                  Work as Plumber
+                </button>
               </div>
 
               <div id="hero-badges" className="mt-12 grid grid-cols-3 gap-4 border-t border-white/10 pt-8 w-full max-w-lg">
