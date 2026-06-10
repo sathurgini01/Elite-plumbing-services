@@ -4,15 +4,11 @@ import Link from 'next/link';
 import { FormEvent, useMemo, useState } from 'react';
 import {
   AlertCircle,
-  CalendarDays,
   CheckCircle,
-  Clock,
   FileText,
   Map,
-  MapPin,
   MessageSquare,
   Phone,
-  ShieldCheck,
   Star,
   Wrench,
   X,

@@ -108,7 +108,6 @@ export function WorkerRegisterView() {
     otherDocument: [],
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [successMessage, setSuccessMessage] = useState('');
 
   const selectedCategories = SERVICE_CATEGORIES.filter((category) => formData.categoryIds.includes(category.id));
   const isOtherSelected =
@@ -126,7 +125,6 @@ export function WorkerRegisterView() {
       Object.keys(fields).forEach((key) => delete next[key]);
       return next;
     });
-    setSuccessMessage('');
   };
 
   const toggleCategory = (categoryId: string) => {
@@ -154,7 +152,6 @@ export function WorkerRegisterView() {
       delete next.serviceId;
       return next;
     });
-    setSuccessMessage('');
   };
 
   const toggleService = (serviceId: string) => {
@@ -169,7 +166,6 @@ export function WorkerRegisterView() {
       delete next.serviceId;
       return next;
     });
-    setSuccessMessage('');
   };
 
   const validateForm = () => {
@@ -228,11 +224,9 @@ export function WorkerRegisterView() {
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
-      setSuccessMessage('');
       return;
     }
 
-    setSuccessMessage('Worker request is ready for admin review. Backend approval flow can connect next.');
     router.push('/plumber/register/success');
   };
 
@@ -506,7 +500,6 @@ export function WorkerRegisterView() {
                       delete next.certificateFiles;
                       return next;
                     });
-                    setSuccessMessage('');
                   }}
                 />
                 <CertificateUploadCard
@@ -521,7 +514,6 @@ export function WorkerRegisterView() {
                       delete next.certificateFiles;
                       return next;
                     });
-                    setSuccessMessage('');
                   }}
                 />
                 <CertificateUploadCard
@@ -536,7 +528,6 @@ export function WorkerRegisterView() {
                       delete next.certificateFiles;
                       return next;
                     });
-                    setSuccessMessage('');
                   }}
                 />
                 <CertificateUploadCard
@@ -551,7 +542,6 @@ export function WorkerRegisterView() {
                       delete next.certificateFiles;
                       return next;
                     });
-                    setSuccessMessage('');
                   }}
                 />
               </div>
@@ -621,12 +611,6 @@ export function WorkerRegisterView() {
               </div>
             </div>
           </div>
-
-          {successMessage && (
-            <div className="mt-7 rounded-sm border border-emerald-400/25 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200">
-              {successMessage}
-            </div>
-          )}
 
           <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
             <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-widest text-white/55 hover:text-white">
