@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { SERVICE_CATEGORIES } from '../data';
 import { getViewHref } from '../navigation';
+import { getServiceCategoryHref } from '../seo';
 
 export function Header() {
   const pathname = usePathname();
@@ -157,7 +158,7 @@ export function Header() {
                 {SERVICE_CATEGORIES.map((cat) => (
                   <Link
                     key={cat.id}
-                    href={getViewHref('services', { categoryId: cat.id })}
+                    href={getServiceCategoryHref(cat)}
                     onClick={closeMenus}
                     className="flex items-center gap-2.5 rounded-sm px-2.5 py-2 text-left hover:bg-[#07162A] group transition-all"
                   >
@@ -220,7 +221,9 @@ export function Header() {
           id="menu-toggle-btn"
           onClick={() => setMobileOpen(!mobileOpen)}
           className="md:hidden text-white/80 hover:text-white p-2"
-          aria-label="Toggle menu"
+          aria-controls="mobile-menu"
+          aria-expanded={mobileOpen}
+          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
         >
           {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
@@ -253,7 +256,7 @@ export function Header() {
                 {SERVICE_CATEGORIES.map((cat) => (
                   <Link
                     key={cat.id}
-                    href={getViewHref('services', { categoryId: cat.id })}
+                    href={getServiceCategoryHref(cat)}
                     onClick={closeMenus}
                     className="text-left text-xs text-white/55 hover:text-[#FBBF24] py-1.5 flex items-center gap-1.5"
                   >

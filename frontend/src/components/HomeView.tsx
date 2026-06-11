@@ -19,6 +19,7 @@ import {
 import { BUSINESS_INFO, SERVICE_CATEGORIES, TESTIMONIALS } from '../data';
 import { ViewState } from '../types';
 import { getViewHref } from '../navigation';
+import { getServiceCategoryHref } from '../seo';
 
 const defaultServiceCardTheme = {
   card: 'border-white/10 bg-[#0B1220] hover:border-[#FBBF24]/35',
@@ -229,15 +230,15 @@ export function HomeView() {
               <div id="hero-badges" className="mt-12 grid grid-cols-3 gap-4 border-t border-white/10 pt-8 w-full max-w-lg">
                 <div>
                   <p className="text-2xl font-serif text-[#FBBF24]">30-60m</p>
-                  <p className="text-[10px] text-white/40 font-mono tracking-widest uppercase mt-1">Response Guarantee</p>
+                  <p className="text-[10px] text-white/60 font-mono tracking-widest uppercase mt-1">Response Guarantee</p>
                 </div>
                 <div>
                   <p className="text-2xl font-serif text-[#FBBF24]">£0.00</p>
-                  <p className="text-[10px] text-white/40 font-mono tracking-widest uppercase mt-1">Diagnostics Charge</p>
+                  <p className="text-[10px] text-white/60 font-mono tracking-widest uppercase mt-1">Diagnostics Charge</p>
                 </div>
                 <div>
                   <p className="text-2xl font-serif text-[#FBBF24]">100%</p>
-                  <p className="text-[10px] text-white/40 font-mono tracking-widest uppercase mt-1">Master Workmanship</p>
+                  <p className="text-[10px] text-white/60 font-mono tracking-widest uppercase mt-1">Master Workmanship</p>
                 </div>
               </div>
             </div>
@@ -275,7 +276,7 @@ export function HomeView() {
             <ShieldCheck className="h-8 w-8 text-[#FBBF24]" />
             <div className="text-left">
               <p className="text-xs font-bold text-white uppercase tracking-wider">Gas Safe Certified</p>
-              <p className="text-[10px] text-white/40 font-mono tracking-widest">REGISTRATION # {BUSINESS_INFO.gasSafeReg}</p>
+              <p className="text-[10px] text-white/60 font-mono tracking-widest">REGISTRATION # {BUSINESS_INFO.gasSafeReg}</p>
             </div>
           </div>
           <div className="h-8 w-px bg-white/10 hidden md:block"></div>
@@ -283,7 +284,7 @@ export function HomeView() {
             <Wrench className="h-8 w-8 text-[#FBBF24]" />
             <div className="text-left">
               <p className="text-xs font-bold text-white uppercase tracking-wider">Zero Call-Out Fee</p>
-              <p className="text-[10px] text-white/40 font-mono tracking-widest">DIRECT COMPLIANCE GUARANTEE</p>
+              <p className="text-[10px] text-white/60 font-mono tracking-widest">DIRECT COMPLIANCE GUARANTEE</p>
             </div>
           </div>
         </div>
@@ -340,14 +341,14 @@ export function HomeView() {
                   {cat.services.slice(0, 3).map((serv) => (
                     <div key={serv.id} className="flex items-center justify-between text-white/60">
                       <span className="truncate max-w-[180px]">• {serv.name}</span>
-                      <span className="text-[#FBBF24]/70 font-semibold">{serv.estimatedPrice}</span>
+                      <span className="text-[#FBBF24] font-semibold">{serv.estimatedPrice}</span>
                     </div>
                   ))}
                 </div>
 
                 <button
                   id={`cat-explore-${cat.id}`}
-                  onClick={() => navigate('services', { categoryId: cat.id })}
+                  onClick={() => router.push(getServiceCategoryHref(cat))}
                   className={`w-full flex items-center justify-between text-[11px] font-mono tracking-wider uppercase font-bold pt-3 border-t border-white/5 ${theme.action}`}
                 >
                   <span>Select Suite Details</span>
@@ -527,9 +528,9 @@ export function HomeView() {
                 <div className="flex items-center justify-between border-t border-white/5 pt-4 text-xs font-mono">
                   <div>
                     <h4 className="text-white font-bold tracking-wide">{test.name}</h4>
-                    <p className="text-white/40 font-light mt-0.5">{test.location}</p>
+                    <p className="text-white/60 font-light mt-0.5">{test.location}</p>
                   </div>
-                  <span className="text-white/30 tracking-widest text-[10px] uppercase">{test.date}</span>
+                  <span className="text-white/60 tracking-widest text-[10px] uppercase">{test.date}</span>
                 </div>
               </div>
             ))}
@@ -592,7 +593,7 @@ export function HomeView() {
 
               <form onSubmit={handleQuickSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-[10px] font-mono tracking-wider font-bold text-white/60 uppercase mb-1.5">
+                  <label htmlFor="quick-cat-select" className="block text-[10px] font-mono tracking-wider font-bold text-white/60 uppercase mb-1.5">
                     What service is required?
                   </label>
                   <select
@@ -612,7 +613,7 @@ export function HomeView() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-mono tracking-wider font-bold text-white/60 uppercase mb-1.5">
+                  <label htmlFor="quick-postcode-input" className="block text-[10px] font-mono tracking-wider font-bold text-white/60 uppercase mb-1.5">
                     Service Postcode
                   </label>
                   <input
@@ -624,7 +625,7 @@ export function HomeView() {
                       if (postcodeError) setPostcodeError('');
                     }}
                     placeholder="e.g. SW19, E1, NW3, W1"
-                    className={`w-full rounded-sm border bg-[#050505] px-3 py-3 text-xs focus:outline-none focus:ring-1 font-mono uppercase tracking-widest text-[#E5E7EB] placeholder-white/25 ${
+                    className={`w-full rounded-sm border bg-[#050505] px-3 py-3 text-xs focus:outline-none focus:ring-1 font-mono uppercase tracking-widest text-[#E5E7EB] placeholder-white/60 ${
                       postcodeError
                         ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/30'
                         : 'border-white/10 focus:border-[#FBBF24] focus:ring-[#FBBF24]'
@@ -739,7 +740,7 @@ export function HomeView() {
               <Phone className="h-5 w-5" />
               {BUSINESS_INFO.phone}
             </a>
-            <p className="text-[10px] tracking-widest uppercase text-white/30 font-mono mt-2">
+            <p className="text-[10px] tracking-widest uppercase text-white/60 font-mono mt-2">
               Rated 5.0 for Excellence • No Dispatch Surcharge
             </p>
           </div>

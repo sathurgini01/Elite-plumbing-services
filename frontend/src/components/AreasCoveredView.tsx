@@ -77,7 +77,11 @@ export function AreasCoveredView() {
           </h3>
 
           <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
+            <label htmlFor="coverage-postcode-input" className="sr-only">
+              Enter postcode to check plumbing coverage
+            </label>
             <input
+              id="coverage-postcode-input"
               type="text"
               value={query}
               onChange={(e) => {
@@ -225,7 +229,7 @@ export function AreasCoveredView() {
                 >
                   <div>
                     <span className="font-mono text-xs font-bold text-[#FBBF24] block">{item.code}</span>
-                    <span className="text-[10px] text-white/45 font-mono tracking-tight block truncate max-w-[150px] uppercase">{item.area}</span>
+                    <span className="text-[10px] text-white/60 font-mono tracking-tight block truncate max-w-[150px] uppercase">{item.area}</span>
                   </div>
                   <span className="text-[9px] bg-[#FBBF24]/10 text-[#FBBF24] font-mono px-2 py-0.5 rounded-sm uppercase tracking-wider">
                     Active

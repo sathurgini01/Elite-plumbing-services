@@ -12,13 +12,13 @@ export function EmergencyBar() {
             <span className="h-2 w-2 rounded-full bg-[#FBBF24] inline-block animate-pulse"></span>
             🚨 24/7 RAPID RESPONSE EMERGENCY
           </span>
-          <span className="hidden sm:inline text-white/20">|</span>
+          <span className="hidden sm:inline text-white/20" aria-hidden="true">|</span>
           <span className="flex items-center gap-1 text-white/65">
             <Flame className="h-3.5 w-3.5 text-[#FBBF24]" />
             Gas Safe ID: <strong className="font-mono font-medium text-white">{BUSINESS_INFO.gasSafeReg}</strong>
           </span>
-          <span className="hidden md:inline text-white/20">|</span>
-          <span className="hidden md:flex items-center gap-1 text-[#FBBF24]/80 font-mono text-xs">
+          <span className="hidden md:inline text-white/20" aria-hidden="true">|</span>
+          <span className="hidden md:flex items-center gap-1 text-[#FBBF24] font-mono text-xs">
             <CheckCircle className="h-3.5 w-3.5" /> 30-60 Min Response Local Plumbers
           </span>
         </div>

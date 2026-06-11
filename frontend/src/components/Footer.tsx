@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Wrench, Phone, Mail, MapPin, Shield, Star, Clock } from 'lucide-react';
 import { BUSINESS_INFO, SERVICE_CATEGORIES } from '../data';
-import { getViewHref } from '../navigation';
+import { getServiceCategoryHref } from '../seo';
 
 export function Footer() {
   return (
@@ -40,7 +40,7 @@ export function Footer() {
             {SERVICE_CATEGORIES.map((cat) => (
               <li key={cat.id}>
                 <Link
-                  href={getViewHref('services', { categoryId: cat.id })}
+                  href={getServiceCategoryHref(cat)}
                   className="hover:text-[#FBBF24] transition-colors hover:underline cursor-pointer flex items-center gap-1.5"
                 >
                   <span className="text-sm">{cat.emoji}</span>
@@ -101,18 +101,18 @@ export function Footer() {
               </div>
             </li>
             <li className="flex items-start gap-2.5">
-              <Mail className="h-4.5 w-4.5 text-white/45 shrink-0 mt-0.5" />
+              <Mail className="h-4.5 w-4.5 text-white/60 shrink-0 mt-0.5" />
               <div>
-                <p className="text-[9px] text-white/45 uppercase tracking-wider font-bold">E-mail Inquiries</p>
+                <p className="text-[9px] text-white/60 uppercase tracking-wider font-bold">E-mail Inquiries</p>
                 <a href={BUSINESS_INFO.emailHref} className="text-white/75 hover:text-[#FBBF24] hover:underline transition-colors mt-0.5 block truncate max-w-[180px] break-all">
                   {BUSINESS_INFO.email}
                 </a>
               </div>
             </li>
             <li className="flex items-start gap-2.5">
-              <MapPin className="h-4.5 w-4.5 text-white/45 shrink-0 mt-0.5" />
+              <MapPin className="h-4.5 w-4.5 text-white/60 shrink-0 mt-0.5" />
               <div>
-                <p className="text-[9px] text-white/45 uppercase tracking-wider font-bold">Headquarters</p>
+                <p className="text-[9px] text-white/60 uppercase tracking-wider font-bold">Headquarters</p>
                 <p className="text-white/60 font-light mt-0.5">London & Nearby Boroughs</p>
               </div>
             </li>
@@ -127,7 +127,7 @@ export function Footer() {
             <p className="text-white/65 font-mono text-[10px] tracking-wider uppercase">
               © {new Date().getFullYear()} {BUSINESS_INFO.name}. All rights reserved.
             </p>
-            <p className="text-[10px] text-white/35 mt-1.5 leading-normal font-light">
+            <p className="text-[10px] text-white/60 mt-1.5 leading-normal font-light">
               Registered in England & Wales. VAT Reg No: {BUSINESS_INFO.vatReg}. Gas Safe Licensing Certificate No: {BUSINESS_INFO.gasSafeReg}. All materials used are fully compliant with UK Water Regulations Advisory details (WRAS).
             </p>
           </div>

@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
 import { AppShell } from '../src/components/AppShell';
+import { JsonLd } from '../src/components/JsonLd';
+import { localBusinessJsonLd, rootMetadata, websiteJsonLd } from '../src/seo';
 import '../src/index.css';
 
-export const metadata: Metadata = {
-  title: 'Elite Plumbing Services',
-  description: '24/7 plumbing, heating, drainage, and Gas Safe services across London.',
-};
+export const metadata: Metadata = rootMetadata;
 
 export default function RootLayout({
   children,
@@ -13,8 +12,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en-GB">
       <body>
+        <JsonLd data={[localBusinessJsonLd(), websiteJsonLd()]} />
         <AppShell>{children}</AppShell>
       </body>
     </html>

@@ -94,11 +94,11 @@ export function ContactView() {
                 <div className="flex gap-4">
                   <Phone className="h-6 w-6 text-[#FBBF24] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-mono font-bold text-white/40 uppercase text-[9px] tracking-wider">24hr Dispatch Hotline</h4>
+                    <h4 className="font-mono font-bold text-white/60 uppercase text-[9px] tracking-wider">24hr Dispatch Hotline</h4>
                     <a href={BUSINESS_INFO.phoneHref} className="text-base font-serif font-bold text-white hover:text-[#FBBF24] transition-colors block mt-1">
                       {BUSINESS_INFO.phone}
                     </a>
-                    <p className="text-white/40 text-[11px] mt-0.5 font-light">Continuous triage & radio dispatch</p>
+                    <p className="text-white/60 text-[11px] mt-0.5 font-light">Continuous triage & radio dispatch</p>
                   </div>
                 </div>
 
@@ -106,7 +106,7 @@ export function ContactView() {
                 <div className="flex gap-4">
                   <Mail className="h-6 w-6 text-[#FBBF24] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-mono font-bold text-white/40 uppercase text-[9px] tracking-wider">Email Support Hub</h4>
+                    <h4 className="font-mono font-bold text-white/60 uppercase text-[9px] tracking-wider">Email Support Hub</h4>
                     <a href={BUSINESS_INFO.emailHref} className="text-base font-mono font-bold text-white hover:text-[#FBBF24] transition-colors block mt-1 break-all text-xs tracking-wider">
                       {BUSINESS_INFO.email}
                     </a>
@@ -115,17 +115,17 @@ export function ContactView() {
 
                 {/* Hours Item */}
                 <div className="flex gap-4">
-                  <Clock className="h-6 w-6 text-white/40 shrink-0 mt-0.5" />
+                  <Clock className="h-6 w-6 text-white/60 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-mono font-bold text-white/40 uppercase text-[9px] tracking-wider">Dispatch Hours</h4>
+                    <h4 className="font-mono font-bold text-white/60 uppercase text-[9px] tracking-wider">Dispatch Hours</h4>
                     <p className="text-white font-bold block mt-1 font-mono text-xs tracking-wider">Mon - Sun: 24h / 365 Days</p>
-                    <p className="text-white/40 text-[11px] mt-0.5">Operates standard shifts on bank holidays</p>
+                    <p className="text-white/60 text-[11px] mt-0.5">Operates standard shifts on bank holidays</p>
                   </div>
                 </div>
               </div>
 
               {/* Badges footer inside card */}
-              <div className="mt-8 pt-6 border-t border-white/10 flex items-center gap-2.5 text-[10px] font-mono text-white/40 tracking-wider">
+              <div className="mt-8 pt-6 border-t border-white/10 flex items-center gap-2.5 text-[10px] font-mono text-white/60 tracking-wider">
                 <ShieldCheck className="h-5 w-5 text-[#FBBF24]" />
                 <span>GAS SAFE LICENCE NO. {BUSINESS_INFO.gasSafeReg}</span>
               </div>
@@ -172,15 +172,16 @@ export function ContactView() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[10px] font-mono uppercase tracking-wider font-bold text-white/50 mb-1.5">Your Full Name</label>
+                      <label htmlFor="contact-name" className="block text-[10px] font-mono uppercase tracking-wider font-bold text-white/60 mb-1.5">Your Full Name</label>
                       <input
+                        id="contact-name"
                         type="text"
                         value={name}
                         onChange={(e) => {
                           setName(e.target.value);
                           clearError('name');
                         }}
-                        className={`w-full rounded-sm border bg-[#050505] px-3.5 py-3 text-xs focus:outline-none focus:ring-1 font-light text-[#E5E7EB] placeholder-white/20 ${
+                        className={`w-full rounded-sm border bg-[#050505] px-3.5 py-3 text-xs focus:outline-none focus:ring-1 font-light text-[#E5E7EB] placeholder-white/60 ${
                           errors.name
                             ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/30'
                             : 'border-white/10 focus:border-[#FBBF24] focus:ring-[#FBBF24]'
@@ -197,15 +198,16 @@ export function ContactView() {
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-mono uppercase tracking-wider font-bold text-white/50 mb-1.5">Your Email Address</label>
+                      <label htmlFor="contact-email" className="block text-[10px] font-mono uppercase tracking-wider font-bold text-white/60 mb-1.5">Your Email Address</label>
                       <input
+                        id="contact-email"
                         type="email"
                         value={email}
                         onChange={(e) => {
                           setEmail(e.target.value);
                           clearError('email');
                         }}
-                        className={`w-full rounded-sm border bg-[#050505] px-3.5 py-3 text-xs focus:outline-none focus:ring-1 font-mono text-[#E5E7EB] placeholder-white/20 ${
+                        className={`w-full rounded-sm border bg-[#050505] px-3.5 py-3 text-xs focus:outline-none focus:ring-1 font-mono text-[#E5E7EB] placeholder-white/60 ${
                           errors.email
                             ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/30'
                             : 'border-white/10 focus:border-[#FBBF24] focus:ring-[#FBBF24]'
@@ -224,15 +226,16 @@ export function ContactView() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[10px] font-mono uppercase tracking-wider font-bold text-white/50 mb-1.5 font-light">Your Telephone <span className="font-mono text-white/20">(optional)</span></label>
+                      <label htmlFor="contact-phone" className="block text-[10px] font-mono uppercase tracking-wider font-bold text-white/60 mb-1.5 font-light">Your Telephone <span className="font-mono text-white/60">(optional)</span></label>
                       <input
+                        id="contact-phone"
                         type="tel"
                         value={phone}
                         onChange={(e) => {
                           setPhone(e.target.value);
                           clearError('phone');
                         }}
-                        className={`w-full rounded-sm border bg-[#050505] px-3.5 py-3 text-xs focus:outline-none focus:ring-1 font-mono text-[#E5E7EB] placeholder-white/20 ${
+                        className={`w-full rounded-sm border bg-[#050505] px-3.5 py-3 text-xs focus:outline-none focus:ring-1 font-mono text-[#E5E7EB] placeholder-white/60 ${
                           errors.phone
                             ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/30'
                             : 'border-white/10 focus:border-[#FBBF24] focus:ring-[#FBBF24]'
@@ -249,8 +252,9 @@ export function ContactView() {
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-mono uppercase tracking-wider font-bold text-white/50 mb-1.5">Inquiry Subject</label>
+                      <label htmlFor="contact-subject" className="block text-[10px] font-mono uppercase tracking-wider font-bold text-white/60 mb-1.5">Inquiry Subject</label>
                       <select
+                        id="contact-subject"
                         value={subject}
                         onChange={(e) => {
                           setSubject(e.target.value);
@@ -281,15 +285,16 @@ export function ContactView() {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider font-bold text-white/50 mb-1.5">Your Message Specification</label>
+                    <label htmlFor="contact-message" className="block text-[10px] font-mono uppercase tracking-wider font-bold text-white/60 mb-1.5">Your Message Specification</label>
                     <textarea
+                      id="contact-message"
                       rows={5}
                       value={message}
                       onChange={(e) => {
                         setMessage(e.target.value);
                         clearError('message');
                       }}
-                      className={`w-full rounded-sm border bg-[#050505] px-3.5 py-3 text-xs focus:outline-none focus:ring-1 font-light text-[#E5E7EB] placeholder-white/20 leading-relaxed ${
+                      className={`w-full rounded-sm border bg-[#050505] px-3.5 py-3 text-xs focus:outline-none focus:ring-1 font-light text-[#E5E7EB] placeholder-white/60 leading-relaxed ${
                         errors.message
                           ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/30'
                           : 'border-white/10 focus:border-[#FBBF24] focus:ring-[#FBBF24]'

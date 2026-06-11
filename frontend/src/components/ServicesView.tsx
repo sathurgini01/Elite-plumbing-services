@@ -6,12 +6,15 @@ import {
   SERVICE_CATEGORIES, 
   BUSINESS_INFO 
 } from '../data';
-import { ServiceCategory } from '../types';
 import { getViewHref } from '../navigation';
 import { Phone, Check, ShieldAlert, BadgeInfo, HelpCircle, Flame } from 'lucide-react';
 
 interface ServicesViewProps {
   initialCategoryId: string | null;
+}
+
+function cleanServiceName(name: string) {
+  return name.replace(/[^\w\s&/-]/g, '').replace(/\s+/g, ' ').trim();
 }
 
 export function ServicesView({ initialCategoryId }: ServicesViewProps) {
@@ -30,6 +33,14 @@ export function ServicesView({ initialCategoryId }: ServicesViewProps) {
   }, [initialCategoryId]);
 
   const activeCategory = SERVICE_CATEGORIES.find(c => c.id === activeCatId) || SERVICE_CATEGORIES[0];
+  const hasFocusedCategory = Boolean(initialCategoryId);
+  const activeCategoryName = cleanServiceName(activeCategory.name);
+  const pageTitle = hasFocusedCategory
+    ? `${activeCategoryName} in London`
+    : 'Plumbing Services We Provide';
+  const pageDescription = hasFocusedCategory
+    ? `${activeCategory.shortDescription} Elite Plumbing Services provides ${activeCategoryName.toLowerCase()} across London with Gas Safe registration ${BUSINESS_INFO.gasSafeReg}, clear estimates, and certified workmanship.`
+    : `Elite Plumbing Services holds Gas Safe registration ${BUSINESS_INFO.gasSafeReg}, offering transparent estimates, experienced mechanics, and clean, certified workmanship.`;
 
   return (
     <div id="services-page" className="font-sans text-[#E5E7EB] bg-[#050505] min-h-screen py-16">
@@ -38,9 +49,9 @@ export function ServicesView({ initialCategoryId }: ServicesViewProps) {
         {/* Page Title Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-[10px] text-[#FBBF24] font-mono uppercase tracking-[0.25em] block mb-2">Our Services</span>
-          <h1 className="text-3xl md:text-5xl font-serif text-white leading-tight">Plumbing Services We Provide</h1>
+          <h1 className="text-3xl md:text-5xl font-serif text-white leading-tight">{pageTitle}</h1>
           <p className="text-white/50 mt-3 text-xs sm:text-sm font-light leading-relaxed">
-            Elite Plumbing Services holds Gas Safe registration {BUSINESS_INFO.gasSafeReg}, offering transparent estimates, experienced mechanics, and clean, certified workmanship.
+            {pageDescription}
           </p>
         </div>
 
@@ -161,7 +172,7 @@ export function ServicesView({ initialCategoryId }: ServicesViewProps) {
 
                   <div className="border-t border-white/5 pt-4 mt-auto flex items-center justify-between">
                     <div>
-                      <p className="text-[9px] text-white/30 font-mono uppercase tracking-wider">Estimated Fee Allocation</p>
+                      <p className="text-[9px] text-white/60 font-mono uppercase tracking-wider">Estimated Fee Allocation</p>
                       <p className="text-white font-mono font-bold text-sm">{service.estimatedPrice}</p>
                     </div>
                     <button
@@ -186,7 +197,7 @@ export function ServicesView({ initialCategoryId }: ServicesViewProps) {
                   <h4 className="font-bold text-white uppercase tracking-wider font-mono text-[11px] mb-1 flex items-center gap-1.5">
                     ✦ I. On-site Audit
                   </h4>
-                  <p className="leading-relaxed text-white/40">
+                  <p className="leading-relaxed text-white/60">
                     Our technician diagnoses the issue, explains the required WRAS-approved parts, and confirms pricing before work begins.
                   </p>
                 </div>
@@ -194,7 +205,7 @@ export function ServicesView({ initialCategoryId }: ServicesViewProps) {
                   <h4 className="font-bold text-white uppercase tracking-wider font-mono text-[11px] mb-1 flex items-center gap-1.5">
                     ✦ II. Restored Clean Room
                   </h4>
-                  <p className="leading-relaxed text-white/40">
+                  <p className="leading-relaxed text-white/60">
                     We protect work areas, clear waste lines, and leave the space clean before sign-off.
                   </p>
                 </div>
@@ -202,7 +213,7 @@ export function ServicesView({ initialCategoryId }: ServicesViewProps) {
                   <h4 className="font-bold text-white uppercase tracking-wider font-mono text-[11px] mb-1 flex items-center gap-1.5">
                     ✦ III. Stress Calibration
                   </h4>
-                  <p className="leading-relaxed text-white/40">
+                  <p className="leading-relaxed text-white/60">
                     We test flow, pressure, and visible joints before completing your workmanship guarantee.
                   </p>
                 </div>

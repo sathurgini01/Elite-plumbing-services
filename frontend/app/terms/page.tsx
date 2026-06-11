@@ -1,6 +1,14 @@
 import Link from 'next/link';
 import { CalendarDays, CheckCircle, Clock, ShieldCheck, Wrench, X } from 'lucide-react';
 import { BUSINESS_INFO } from '../../src/data';
+import { createPageMetadata } from '../../src/seo';
+
+export const metadata = createPageMetadata({
+  title: 'Terms and Conditions',
+  description:
+    'Read the booking, pricing, cancellation, parts, workmanship, and customer responsibility terms for Elite Plumbing Services.',
+  path: '/terms',
+});
 
 const terms = [
   {
