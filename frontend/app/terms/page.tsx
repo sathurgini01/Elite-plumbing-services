@@ -37,15 +37,8 @@ const terms = [
   },
 ];
 
-type TermsPageProps = {
-  searchParams?: Promise<{
-    returnTo?: string;
-  }>;
-};
-
-export default async function TermsPage({ searchParams }: TermsPageProps) {
-  const params = await searchParams;
-  const returnHref = params?.returnTo?.startsWith('/') ? params.returnTo : '/signup';
+export default function TermsPage() {
+  const returnHref = '/signup';
 
   return (
     <div className="bg-[#050505] text-[#E5E7EB]">

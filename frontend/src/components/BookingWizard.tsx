@@ -93,24 +93,40 @@ export function BookingWizard({ initialParams }: BookingWizardProps) {
   // Client validation state
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Parse incoming parameters from Home view quick estimator or Services list
+  // Parse incoming parameters from Home view quick estimator or Services list.
   useEffect(() => {
-    if (initialParams) {
+    const queryParams =
+      initialParams ??
+      (typeof window === 'undefined'
+        ? null
+        : (() => {
+            const params = new URLSearchParams(window.location.search);
+            const isEmergency = params.get('isEmergency');
+
+            return {
+              categoryId: params.get('categoryId') ?? undefined,
+              serviceId: params.get('serviceId') ?? undefined,
+              postcode: params.get('postcode') ?? undefined,
+              isEmergency: isEmergency === null ? undefined : isEmergency === 'true',
+            };
+          })());
+
+    if (queryParams) {
       const updated: Partial<BookingFormData> = {};
       
-      if (initialParams.categoryId) {
-        updated.categoryId = initialParams.categoryId;
+      if (queryParams.categoryId) {
+        updated.categoryId = queryParams.categoryId;
         setStep(2); // Jump directly to service selector
       }
-      if (initialParams.serviceId) {
-        updated.serviceId = initialParams.serviceId;
+      if (queryParams.serviceId) {
+        updated.serviceId = queryParams.serviceId;
         setStep(3); // Jump directly to property type
       }
-      if (initialParams.postcode) {
-        updated.postcode = initialParams.postcode.toUpperCase();
+      if (queryParams.postcode) {
+        updated.postcode = queryParams.postcode.toUpperCase();
       }
-      if (initialParams.isEmergency !== undefined) {
-        updated.isEmergency = initialParams.isEmergency;
+      if (queryParams.isEmergency !== undefined) {
+        updated.isEmergency = queryParams.isEmergency;
       }
 
       setFormData(prev => ({ ...prev, ...updated }));

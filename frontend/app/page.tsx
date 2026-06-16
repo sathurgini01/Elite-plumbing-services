@@ -2,8 +2,6 @@ import { HomeView } from '../src/components/HomeView';
 import { JsonLd } from '../src/components/JsonLd';
 import { createPageMetadata, faqJsonLd, reviewsJsonLd } from '../src/seo';
 
-export const dynamic = 'force-dynamic';
-
 export const metadata = createPageMetadata({
   title: '24/7 Emergency Plumbers in London',
   description:

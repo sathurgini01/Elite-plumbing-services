@@ -1,8 +1,6 @@
 import { AreasCoveredView } from '../../src/components/AreasCoveredView';
 import { createPageMetadata } from '../../src/seo';
 
-export const dynamic = 'force-dynamic';
-
 export const metadata = createPageMetadata({
   title: 'Areas Covered by Our London Plumbers',
   description:

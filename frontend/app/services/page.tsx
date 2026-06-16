@@ -1,8 +1,6 @@
 import { ServicesView } from '../../src/components/ServicesView';
 import { createPageMetadata } from '../../src/seo';
 
-export const dynamic = 'force-dynamic';
-
 export const metadata = createPageMetadata({
   title: 'Plumbing Services in London',
   description:
@@ -10,14 +8,6 @@ export const metadata = createPageMetadata({
   path: '/services',
 });
 
-type ServicesPageProps = {
-  searchParams?: Promise<{
-    categoryId?: string;
-  }>;
-};
-
-export default async function ServicesPage({ searchParams }: ServicesPageProps) {
-  const params = await searchParams;
-
-  return <ServicesView initialCategoryId={params?.categoryId ?? null} />;
+export default function ServicesPage() {
+  return <ServicesView initialCategoryId={null} />;
 }

@@ -10,8 +10,6 @@ import {
   serviceCategoryJsonLd,
 } from '../../../src/seo';
 
-export const dynamic = 'force-dynamic';
-
 type ServiceCategoryPageProps = {
   params: Promise<{
     slug: string;

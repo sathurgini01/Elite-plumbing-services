@@ -1,8 +1,6 @@
 import { AboutView } from '../../src/components/AboutView';
 import { createPageMetadata } from '../../src/seo';
 
-export const dynamic = 'force-dynamic';
-
 export const metadata = createPageMetadata({
   title: 'About Our Gas Safe London Plumbers',
   description:

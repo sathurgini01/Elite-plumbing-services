@@ -1,8 +1,6 @@
 import { ContactView } from '../../src/components/ContactView';
 import { createPageMetadata } from '../../src/seo';
 
-export const dynamic = 'force-dynamic';
-
 export const metadata = createPageMetadata({
   title: 'Contact Elite Plumbing Services',
   description:
