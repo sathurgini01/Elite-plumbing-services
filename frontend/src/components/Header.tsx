@@ -1,39 +1,18 @@
-'use client';
-
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ChevronDown, Menu } from 'lucide-react';
 import { SERVICE_CATEGORIES } from '../data';
-import { getViewHref } from '../navigation';
 import { getServiceCategoryHref } from '../seo';
 
 export function Header() {
-  const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-
-  const isActive = (path: string) => {
-    if (path === '/') return pathname === '/';
-    return pathname.startsWith(path);
-  };
-
-  const closeMenus = () => {
-    setMobileOpen(false);
-    setServicesOpen(false);
-  };
-
-  const navClass = (path: string) => `hover:text-[#FBBF24] transition-colors cursor-pointer ${
-    isActive(path) ? 'text-[#FBBF24] underline underline-offset-8 decoration-2 decoration-[#FBBF24]' : ''
-  }`;
+  const navClass = 'hover:text-[#FBBF24] transition-colors cursor-pointer';
 
   return (
     <header id="app-header" className="bg-[#0B1220] border-b border-white/10 text-white sticky top-0 z-40 font-sans font-medium">
+      <input id="mobile-menu-toggle" type="checkbox" className="peer sr-only" aria-hidden="true" />
       <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between gap-3">
         <Link
           id="logo-brand"
           href="/"
-          onClick={closeMenus}
           className="brand-mark flex min-w-0 items-center gap-2.5 sm:gap-3 text-left focus:outline-none cursor-pointer group"
         >
           <div className="brand-tool-logo relative flex h-11 w-11 sm:h-13 sm:w-13 shrink-0 items-center justify-center rounded-sm bg-[#050505] border border-[#FBBF24]/50 shadow-md transition-transform group-hover:scale-105">
@@ -121,35 +100,27 @@ export function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-5 text-xs tracking-widest uppercase font-semibold text-white/70">
-          <Link id="nav-btn-home" href="/" className={navClass('/')}>
+          <Link id="nav-btn-home" href="/" className={navClass}>
             Home
           </Link>
 
-          <div
-            className="relative"
-            onMouseEnter={() => setServicesOpen(true)}
-            onMouseLeave={() => setServicesOpen(false)}
-          >
+          <div className="group/services relative">
             <Link
               id="nav-btn-services-dropdown"
               href="/services"
-              className={`flex items-center gap-1 hover:text-[#FBBF24] transition-colors cursor-pointer py-2 ${
-                isActive('/services') ? 'text-[#FBBF24]' : ''
-              }`}
+              className="flex items-center gap-1 py-2 transition-colors hover:text-[#FBBF24]"
             >
               Services <ChevronDown className="h-3.5 w-3.5" />
             </Link>
 
-            {servicesOpen && (
-              <div
-                id="mega-menu"
-                className="absolute left-0 top-full mt-1 w-[480px] bg-[#0B1220] text-[#E5E7EB] p-5 rounded-sm shadow-2xl border border-white/10 grid grid-cols-2 gap-2 animate-in fade-in duration-200 z-50 animate-out fade-out"
-              >
+            <div
+              id="mega-menu"
+              className="pointer-events-none invisible absolute left-0 top-full z-50 mt-1 grid w-[480px] grid-cols-2 gap-2 rounded-sm border border-white/10 bg-[#0B1220] p-5 text-[#E5E7EB] opacity-0 shadow-2xl transition-opacity group-hover/services:pointer-events-auto group-hover/services:visible group-hover/services:opacity-100"
+            >
                 <div className="col-span-2 pb-2 mb-2 border-b border-white/5 flex items-center justify-between">
                   <span className="text-[10px] font-bold text-[#FBBF24] uppercase tracking-widest">Our Services</span>
                   <Link
                     href="/services"
-                    onClick={closeMenus}
                     className="text-[10px] text-white hover:text-[#FBBF24] transition-colors uppercase font-mono tracking-widest font-bold"
                   >
                     View All Services ➔
@@ -159,7 +130,6 @@ export function Header() {
                   <Link
                     key={cat.id}
                     href={getServiceCategoryHref(cat)}
-                    onClick={closeMenus}
                     className="flex items-center gap-2.5 rounded-sm px-2.5 py-2 text-left hover:bg-[#07162A] group transition-all"
                   >
                     <span className="bg-white/5 group-hover:bg-[#FBBF24]/10 p-1.5 rounded-sm text-lg transition-colors">{cat.emoji}</span>
@@ -170,18 +140,17 @@ export function Header() {
                   </Link>
                 ))}
               </div>
-            )}
           </div>
 
-          <Link id="nav-btn-my-bookings" href="/customer/bookings" className={navClass('/customer/bookings')}>
+          <Link id="nav-btn-my-bookings" href="/customer/bookings" className={navClass}>
             My Bookings
           </Link>
 
-          <Link id="nav-btn-areas" href="/areas" className={navClass('/areas')}>
+          <Link id="nav-btn-areas" href="/areas" className={navClass}>
             Areas Covered
           </Link>
 
-          <Link id="nav-btn-about" href="/about" className={navClass('/about')}>
+          <Link id="nav-btn-about" href="/about" className={navClass}>
             About
           </Link>
 
@@ -189,7 +158,7 @@ export function Header() {
             FAQ
           </Link>
 
-          <Link id="nav-btn-contact" href="/contact" className={navClass('/contact')}>
+          <Link id="nav-btn-contact" href="/contact" className={navClass}>
             Contact Us
           </Link>
         </nav>
@@ -198,46 +167,35 @@ export function Header() {
           <Link
             id="nav-btn-signin"
             href="/signin"
-            className={`rounded-sm border border-white/15 px-4 py-2 text-white/75 transition-all hover:border-[#FBBF24]/50 hover:text-[#FBBF24] ${
-              isActive('/signin') ? 'border-[#FBBF24]/60 text-[#FBBF24]' : ''
-            }`}
+            className="rounded-sm border border-white/15 px-4 py-2 text-white/75 transition-all hover:border-[#FBBF24]/50 hover:text-[#FBBF24]"
           >
             Sign In
           </Link>
           <Link
             id="nav-btn-signup"
             href="/signup"
-            className={`rounded-sm border border-[#FBBF24] px-4 py-2 font-bold text-[#0B1220] transition-all ${
-              isActive('/signup')
-                ? 'bg-transparent text-[#FBBF24]'
-                : 'bg-[#FBBF24] hover:bg-transparent hover:text-[#FBBF24]'
-            }`}
+            className="rounded-sm border border-[#FBBF24] bg-[#FBBF24] px-4 py-2 font-bold text-[#0B1220] transition-all hover:bg-transparent hover:text-[#FBBF24]"
           >
             Sign Up
           </Link>
         </div>
 
-        <button
-          id="menu-toggle-btn"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-white/80 hover:text-white p-2"
-          aria-controls="mobile-menu"
-          aria-expanded={mobileOpen}
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-        >
-          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <label
+          htmlFor="mobile-menu-toggle"
+            id="menu-toggle-btn"
+          className="cursor-pointer p-2 text-white/80 hover:text-white md:hidden"
+            aria-controls="mobile-menu"
+            aria-label="Open menu"
+          >
+            <Menu className="h-6 w-6" />
+        </label>
       </div>
 
-      {mobileOpen && (
-        <div id="mobile-menu" className="md:hidden border-t border-white/10 bg-[#0B1220] px-4 py-5 animate-in slide-in-from-top duration-200">
+      <div id="mobile-menu" className="hidden border-t border-white/10 bg-[#0B1220] px-4 py-5 peer-checked:block md:hidden">
           <div className="flex flex-col gap-4">
             <Link
               href="/"
-              onClick={closeMenus}
-              className={`text-left font-serif text-lg py-1 border-b border-white/10 ${
-                isActive('/') ? 'text-[#FBBF24]' : 'text-white/80'
-              }`}
+              className="border-b border-white/10 py-1 text-left font-serif text-lg text-white/80"
             >
               Home
             </Link>
@@ -245,10 +203,7 @@ export function Header() {
             <div className="space-y-2">
               <Link
                 href="/services"
-                onClick={closeMenus}
-                className={`text-left font-serif text-lg py-1 w-full block border-b border-white/10 ${
-                  isActive('/services') ? 'text-[#FBBF24]' : 'text-white/70'
-                }`}
+                className="block w-full border-b border-white/10 py-1 text-left font-serif text-lg text-white/70"
               >
                 All Services
               </Link>
@@ -257,7 +212,6 @@ export function Header() {
                   <Link
                     key={cat.id}
                     href={getServiceCategoryHref(cat)}
-                    onClick={closeMenus}
                     className="text-left text-xs text-white/55 hover:text-[#FBBF24] py-1.5 flex items-center gap-1.5"
                   >
                     <span>{cat.emoji}</span>
@@ -269,37 +223,27 @@ export function Header() {
 
             <Link
               href="/customer/bookings"
-              onClick={closeMenus}
-              className={`text-left font-serif text-lg py-1 border-b border-white/10 ${
-                isActive('/customer/bookings') ? 'text-[#FBBF24]' : 'text-white/80'
-              }`}
+              className="border-b border-white/10 py-1 text-left font-serif text-lg text-white/80"
             >
               My Bookings
             </Link>
 
             <Link
               href="/areas"
-              onClick={closeMenus}
-              className={`text-left font-serif text-lg py-1 border-b border-white/10 ${
-                isActive('/areas') ? 'text-[#FBBF24]' : 'text-white/80'
-              }`}
+              className="border-b border-white/10 py-1 text-left font-serif text-lg text-white/80"
             >
               Service Postcodes Covered
             </Link>
 
             <Link
               href="/about"
-              onClick={closeMenus}
-              className={`text-left font-serif text-lg py-1 border-b border-white/10 ${
-                isActive('/about') ? 'text-[#FBBF24]' : 'text-white/80'
-              }`}
+              className="border-b border-white/10 py-1 text-left font-serif text-lg text-white/80"
             >
               About Company Standards
             </Link>
 
             <Link
               href="/#faq"
-              onClick={closeMenus}
               className="text-left font-serif text-lg py-1 border-b border-white/10 text-white/80 hover:text-[#FBBF24]"
             >
               Plumbing FAQ
@@ -307,10 +251,7 @@ export function Header() {
 
             <Link
               href="/contact"
-              onClick={closeMenus}
-              className={`text-left font-serif text-lg py-1 border-b border-white/10 ${
-                isActive('/contact') ? 'text-[#FBBF24]' : 'text-white/80'
-              }`}
+              className="border-b border-white/10 py-1 text-left font-serif text-lg text-white/80"
             >
               Contact Us
             </Link>
@@ -318,27 +259,19 @@ export function Header() {
             <div className="grid grid-cols-2 gap-3 pt-2">
               <Link
                 href="/signin"
-                onClick={closeMenus}
-                className={`rounded-sm border border-white/15 px-4 py-3 text-center text-xs font-bold uppercase tracking-widest transition-all ${
-                  isActive('/signin') ? 'border-[#FBBF24]/60 text-[#FBBF24]' : 'text-white/80 hover:border-[#FBBF24]/50 hover:text-[#FBBF24]'
-                }`}
+                className="rounded-sm border border-white/15 px-4 py-3 text-center text-xs font-bold uppercase tracking-widest text-white/80 transition-all hover:border-[#FBBF24]/50 hover:text-[#FBBF24]"
               >
                 Sign In
               </Link>
               <Link
                 href="/signup"
-                onClick={closeMenus}
-                className={`rounded-sm border border-[#FBBF24] px-4 py-3 text-center text-xs font-bold uppercase tracking-widest transition-all ${
-                  isActive('/signup') ? 'bg-transparent text-[#FBBF24]' : 'bg-[#FBBF24] text-[#0B1220] hover:bg-transparent hover:text-[#FBBF24]'
-                }`}
+                className="rounded-sm border border-[#FBBF24] bg-[#FBBF24] px-4 py-3 text-center text-xs font-bold uppercase tracking-widest text-[#0B1220] transition-all hover:bg-transparent hover:text-[#FBBF24]"
               >
                 Sign Up
               </Link>
             </div>
-
           </div>
-        </div>
-      )}
+      </div>
     </header>
   );
 }

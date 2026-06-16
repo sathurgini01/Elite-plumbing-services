@@ -1,7 +1,3 @@
-'use client';
-
-import { useState, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { 
   Phone, 
@@ -13,12 +9,9 @@ import {
   Clock, 
   Wrench, 
   ChevronRight, 
-  AlertTriangle,
   MapPin 
 } from 'lucide-react';
 import { BUSINESS_INFO, SERVICE_CATEGORIES, TESTIMONIALS } from '../data';
-import { ViewState } from '../types';
-import { getViewHref } from '../navigation';
 import { getServiceCategoryHref } from '../seo';
 
 const defaultServiceCardTheme = {
@@ -97,16 +90,7 @@ const serviceCardThemes: Record<string, typeof defaultServiceCardTheme> = {
   },
 };
 
-const UK_POSTCODE_OR_PREFIX_REGEX = /^[A-Z]{1,2}\d[A-Z\d]?(?:\s*\d[A-Z]{2})?$/i;
-
 export function HomeView() {
-  const router = useRouter();
-  // Quick quote selector form state
-  const [quickCat, setQuickCat] = useState('');
-  const [quickPostcode, setQuickPostcode] = useState('');
-  const [postcodeError, setPostcodeError] = useState('');
-  const [openFaq, setOpenFaq] = useState(0);
-
   const faqs = [
     {
       question: 'Do plumbers deal with heating?',
@@ -130,42 +114,23 @@ export function HomeView() {
     },
   ];
 
-  const navigate = (view: ViewState, params?: Record<string, unknown>) => {
-    router.push(getViewHref(view, params));
-  };
-
-  const handleQuickSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    
-    // Simple validation of UK postcode format
-    const trimmed = quickPostcode.trim().toUpperCase();
-    if (!UK_POSTCODE_OR_PREFIX_REGEX.test(trimmed)) {
-      setPostcodeError('Enter a valid UK postcode or prefix, e.g. SW19 or SW19 1AA');
-      return;
-    }
-
-    setPostcodeError('');
-    navigate('booking', {
-      categoryId: quickCat,
-      postcode: trimmed
-    });
-  };
-
   return (
     <div id="home-view-container" className="font-sans bg-[#050505] text-[#E5E7EB]">
       {/* SECTION 1: FULL SCREEN HERO */}
       <section id="hero-banner" className="relative min-h-[calc(100vh-76px)] bg-[#050505] overflow-hidden text-white border-b border-white/10">
-        <Image
-          src="/images/homepage-hero-van.png"
-          alt="Dark plumbing service van parked on a London residential street"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center brightness-[1.18] contrast-[1.08] saturate-[1.05]"
-        />
+        <picture>
+          <source media="(max-width: 767px)" srcSet="/images/homepage-hero-van-mobile.jpg" />
+          <img
+            src="/images/homepage-hero-van.jpg"
+            alt="Dark plumbing service van parked on a London residential street"
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover object-center"
+          />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-black/5 pointer-events-none"></div>
         <div className="absolute inset-y-0 left-0 w-full lg:w-[62%] bg-gradient-to-r from-black/55 via-black/25 to-transparent pointer-events-none"></div>
-        <div className="absolute inset-0 bg-[#0B1220]/10 mix-blend-multiply pointer-events-none"></div>
         {/* Decorative Grid SVG in background */}
         <div className="absolute inset-0 text-white opacity-[0.035] pointer-events-none">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
@@ -211,20 +176,20 @@ export function HomeView() {
                   <Phone className="h-4 w-4" />
                   Priority Line: {BUSINESS_INFO.phone}
                 </a>
-                <button
-                  onClick={() => navigate('booking')}
+                <a
+                  href="/booking"
                   className="bg-[#0B1220] hover:bg-[#07162A] text-white border border-white/15 font-bold uppercase text-xs tracking-widest px-8 py-4 transition-all rounded-sm flex items-center justify-center gap-2"
                 >
                   <CalendarDays className="h-4.5 w-4.5 text-[#FBBF24]" />
                   Book a Plumbing Visit
-                </button>
-                <button
-                  onClick={() => router.push('/plumber/register')}
+                </a>
+                <a
+                  href="/plumber/register"
                   className="bg-black/45 hover:bg-[#07162A] text-white border border-[#FBBF24]/35 font-bold uppercase text-xs tracking-widest px-8 py-4 transition-all rounded-sm flex items-center justify-center gap-2"
                 >
                   <Wrench className="h-4.5 w-4.5 text-[#FBBF24]" />
                   Work as Plumber
-                </button>
+                </a>
               </div>
 
               <div id="hero-badges" className="mt-12 grid grid-cols-3 gap-4 border-t border-white/10 pt-8 w-full max-w-lg">
@@ -346,27 +311,27 @@ export function HomeView() {
                   ))}
                 </div>
 
-                <button
+                <a
                   id={`cat-explore-${cat.id}`}
-                  onClick={() => router.push(getServiceCategoryHref(cat))}
+                  href={getServiceCategoryHref(cat)}
                   className={`w-full flex items-center justify-between text-[11px] font-mono tracking-wider uppercase font-bold pt-3 border-t border-white/5 ${theme.action}`}
                 >
                   <span>Select Suite Details</span>
                   <ChevronRight className="h-4 w-4" />
-                </button>
+                </a>
               </div>
               );
             })}
           </div>
 
           <div className="mt-12 text-center">
-            <button
+            <a
               id="cta-all-services"
-              onClick={() => navigate('services')}
+              href="/services"
               className="bg-[#0B1220] text-white border border-white/15 hover:bg-[#07162A] text-xs tracking-widest font-mono uppercase font-bold px-8 py-4 transition-all"
             >
               View All Plumbing Services
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -421,18 +386,17 @@ export function HomeView() {
                 ))}
               </div>
 
-              <button
-                type="button"
-                onClick={() => navigate('booking')}
+              <a
+                href="/booking"
                 className="mt-10 inline-flex rounded-sm bg-[#FBBF24] px-8 py-4 text-xs font-bold uppercase tracking-widest text-[#0B1220] transition hover:bg-[#F59E0B]"
               >
                 Book Now
-              </button>
+              </a>
             </div>
 
             <div className="relative min-h-[420px] lg:col-span-6 overflow-hidden rounded-sm border border-white/10 shadow-2xl">
               <Image
-                src="/images/why-choose-quality-plumbing.png"
+                src="/images/why-choose-quality-plumbing.jpg"
                 alt="Professional plumber inspecting premium pipework and heating controls"
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
@@ -452,7 +416,7 @@ export function HomeView() {
             <div className="grid grid-cols-1 lg:grid-cols-12">
               <div className="relative min-h-[300px] lg:col-span-6">
                 <Image
-                  src="/images/areas-covered-london-plumber.png"
+                  src="/images/areas-covered-london-plumber.jpg"
                   alt="Professional London plumber checking service coverage outside a townhouse"
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"
@@ -483,13 +447,12 @@ export function HomeView() {
                   ))}
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => navigate('areas')}
+                <a
+                  href="/areas"
                   className="mt-9 inline-flex w-fit items-center gap-2 rounded-sm bg-[#FBBF24] px-7 py-4 text-xs font-bold uppercase tracking-widest text-[#0B1220] transition hover:bg-[#F59E0B]"
                 >
                   View All Locations <ArrowRight className="h-4 w-4" />
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -544,12 +507,12 @@ export function HomeView() {
                 <p className="text-xs text-white/50 font-light mt-0.5">We coordinate convenient slots with tenants, owners, or site managers.</p>
               </div>
             </div>
-            <button
-              onClick={() => navigate('booking')}
+            <a
+              href="/booking"
               className="bg-[#0B1220] hover:bg-[#07162A] text-white border border-white/15 font-bold uppercase tracking-widest text-[11px] px-6 py-3.5 rounded-sm transition-all shadow-md whitespace-nowrap"
             >
               Book a Visit ➔
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -591,15 +554,15 @@ export function HomeView() {
                 Instant reservation in 2 minutes
               </p>
 
-              <form onSubmit={handleQuickSubmit} className="space-y-4">
+              <form action="/booking" method="get" className="space-y-4">
                 <div>
                   <label htmlFor="quick-cat-select" className="block text-[10px] font-mono tracking-wider font-bold text-white/60 uppercase mb-1.5">
                     What service is required?
                   </label>
                   <select
                     id="quick-cat-select"
-                    value={quickCat}
-                    onChange={(e) => setQuickCat(e.target.value)}
+                    name="categoryId"
+                    defaultValue=""
                     className="w-full rounded-sm border border-white/10 bg-[#050505] px-3 py-3 text-xs focus:border-[#FBBF24] focus:outline-none focus:ring-1 focus:ring-[#FBBF24] font-mono tracking-wide text-[#E5E7EB]"
                     required
                   >
@@ -618,27 +581,14 @@ export function HomeView() {
                   </label>
                   <input
                     id="quick-postcode-input"
+                    name="postcode"
                     type="text"
-                    value={quickPostcode}
-                    onChange={(e) => {
-                      setQuickPostcode(e.target.value);
-                      if (postcodeError) setPostcodeError('');
-                    }}
+                    pattern="[A-Za-z]{1,2}[0-9][A-Za-z0-9]?( ?[0-9][A-Za-z]{2})?"
+                    title="Enter a valid UK postcode or prefix, e.g. SW19 or SW19 1AA"
                     placeholder="e.g. SW19, E1, NW3, W1"
-                    className={`w-full rounded-sm border bg-[#050505] px-3 py-3 text-xs focus:outline-none focus:ring-1 font-mono uppercase tracking-widest text-[#E5E7EB] placeholder-white/60 ${
-                      postcodeError
-                        ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/30'
-                        : 'border-white/10 focus:border-[#FBBF24] focus:ring-[#FBBF24]'
-                    }`}
-                    aria-invalid={Boolean(postcodeError)}
+                    className="w-full rounded-sm border border-white/10 bg-[#050505] px-3 py-3 text-xs focus:border-[#FBBF24] focus:outline-none focus:ring-1 focus:ring-[#FBBF24] font-mono uppercase tracking-widest text-[#E5E7EB] placeholder-white/60"
                     required
                   />
-                  {postcodeError && (
-                    <p className="text-amber-500 text-xs mt-1.5 font-mono flex items-center gap-1">
-                      <AlertTriangle className="h-3 w-3 shrink-0" />
-                      {postcodeError}
-                    </p>
-                  )}
                 </div>
 
                 <div className="bg-[#050505] rounded-sm p-4 text-[11px] text-white/50 leading-relaxed mb-2 border border-white/5">
@@ -678,39 +628,22 @@ export function HomeView() {
 
           <div className="max-w-5xl mx-auto bg-[#0B1220] border border-white/10 rounded-sm shadow-xl">
             <div className="divide-y divide-white/10">
-              {faqs.map((faq, index) => {
-                const isOpen = openFaq === index;
-
-                return (
-                  <div key={faq.question} className="px-5 sm:px-8">
-                    <button
-                      type="button"
-                      onClick={() => setOpenFaq(isOpen ? -1 : index)}
-                      className="w-full flex items-center justify-between gap-6 py-6 text-left group"
-                      aria-expanded={isOpen}
-                    >
-                      <span className={`text-base md:text-xl font-serif leading-snug transition-colors ${
-                        isOpen ? 'text-[#FBBF24]' : 'text-white group-hover:text-[#FBBF24]'
-                      }`}>
-                        {faq.question}
-                      </span>
-                      <span className={`h-9 w-9 rounded-sm border flex items-center justify-center text-2xl leading-none font-light shrink-0 transition-all ${
-                        isOpen
-                          ? 'border-[#FBBF24] bg-[#FBBF24] text-[#0B1220]'
-                          : 'border-white/10 bg-[#050505] text-[#FBBF24] group-hover:border-[#FBBF24]/50'
-                      }`}>
-                        {isOpen ? '-' : '+'}
-                      </span>
-                    </button>
-
-                    {isOpen && (
-                      <p className="pb-7 text-xs sm:text-sm leading-7 text-white/55 font-light max-w-4xl">
-                        {faq.answer}
-                      </p>
-                    )}
-                  </div>
-                );
-              })}
+              {faqs.map((faq, index) => (
+                <details key={faq.question} className="group px-5 sm:px-8" open={index === 0}>
+                  <summary className="flex w-full cursor-pointer list-none items-center justify-between gap-6 py-6 text-left">
+                    <span className="text-base md:text-xl font-serif leading-snug text-white transition-colors group-open:text-[#FBBF24] group-hover:text-[#FBBF24]">
+                      {faq.question}
+                    </span>
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border border-white/10 bg-[#050505] text-2xl font-light leading-none text-[#FBBF24] transition-all group-hover:border-[#FBBF24]/50 group-open:border-[#FBBF24] group-open:bg-[#FBBF24] group-open:text-[#0B1220]">
+                      <span className="group-open:hidden">+</span>
+                      <span className="hidden group-open:inline">-</span>
+                    </span>
+                  </summary>
+                  <p className="pb-7 text-xs sm:text-sm leading-7 text-white/55 font-light max-w-4xl">
+                    {faq.answer}
+                  </p>
+                </details>
+              ))}
             </div>
           </div>
         </div>

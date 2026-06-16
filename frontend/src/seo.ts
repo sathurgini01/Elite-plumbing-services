@@ -4,7 +4,7 @@ import { BUSINESS_INFO, SERVICE_CATEGORIES, TESTIMONIALS } from './data';
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.eliteplumbingservices.co.uk';
 
 export const SITE_NAME = 'Elite Plumbing Services';
-export const DEFAULT_OG_IMAGE = '/images/homepage-hero-van.png';
+export const DEFAULT_OG_IMAGE = '/images/homepage-hero-van.jpg';
 
 export const SERVICE_AREAS = [
   'London',

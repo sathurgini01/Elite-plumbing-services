@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 import { ArrowRight, CheckCircle, Mail, Phone, Shield, ShieldCheck } from 'lucide-react';
@@ -133,16 +132,18 @@ export function AuthView({ mode }: AuthViewProps) {
 
   return (
     <section className="relative min-h-[calc(100vh-76px)] overflow-hidden bg-[#050505] text-white">
-      <Image
-        src="/images/homepage-hero-van.png"
-        alt="Elite Plumbers service van on a London street"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-center brightness-[1.08] contrast-[1.08] saturate-[1.02]"
-      />
+      <picture>
+        <source media="(max-width: 767px)" srcSet="/images/homepage-hero-van-mobile.jpg" />
+        <img
+          src="/images/homepage-hero-van.jpg"
+          alt="Elite Plumbers service van on a London street"
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+        />
+      </picture>
       <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-[#050505]/78 to-black/25" />
-      <div className="absolute inset-0 bg-[#0B1220]/20 mix-blend-multiply" />
       <div className="absolute inset-0 text-white opacity-[0.035]">
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
           <defs>

@@ -41,7 +41,7 @@ export default function TermsPage() {
   const returnHref = '/signup';
 
   return (
-    <div className="bg-[#050505] text-[#E5E7EB]">
+    <div id="terms-page" className="bg-[#050505] text-[#E5E7EB]">
       <section className="relative border-b border-white/10 bg-[#07162A] px-4 py-16">
         <Link
           href={returnHref}

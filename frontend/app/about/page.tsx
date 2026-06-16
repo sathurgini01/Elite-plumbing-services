@@ -6,7 +6,7 @@ export const metadata = createPageMetadata({
   description:
     'Learn about Elite Plumbing Services, Gas Safe registration, insured workmanship, London service standards, and our 12-month plumbing guarantee.',
   path: '/about',
-  image: '/images/why-choose-quality-plumbing.png',
+  image: '/images/why-choose-quality-plumbing.jpg',
 });
 
 export default function AboutPage() {
